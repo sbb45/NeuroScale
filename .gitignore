@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+/admin/node_modules
+/nextApp/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -9,13 +10,17 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+.idea
 
 # testing
 /coverage
 
 # next.js
-/.next/
-/out/
+/nextApp/.next/
+/nextApp/out/
+
+# keystone
+/admin/.keystone/
 
 # production
 /build

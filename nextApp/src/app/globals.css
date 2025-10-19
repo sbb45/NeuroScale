@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+    --blue-dark: #002877;
+    --blue-primary: #004FED;
+    --gradient-blue: linear-gradient(90deg,var(--blue-dark) 24%,var(--blue-primary) 100%);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-blue-dark: #002877;
+    --color-blue-bright: #004FED;
+    --color-gray: #7E7889;
+    --font-montserrat: var(--font-montserrat);
+    --gradient-blue: linear-gradient(to right, var(--blue-dark) 24%, var(--blue-primary) 100%);
+
+    /*Контейнеры*/
+    --container-xs: 480px;
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+    --container-2xl: 1440px;
+}
+
+body {
+  background: var(--blue-dark);
+  color: var(--foreground);
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.gradientBlock{
+    @apply min-w-8 min-h-8 md:min-w-12 md:min-h-12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg ,var(--blue-dark),var(--blue-primary));
+    border-radius: 100%;
+}
+.gradientBtn{
+    background: linear-gradient(90deg ,var(--blue-dark),var(--blue-primary));
+    background-size: 200% 100%;
+    background-position: 0% 0%;
+    border-radius: 24px 24px 24px 0;
+    color: white;
+    transition: background .6s ease;
+}
+.gradientBtn:hover{
+    background-position: 50% 0%;
+}
+
+.sectionSubtitle{
+    @apply text-lg text-[var(--color-blue-bright)] font-bold md:text-xl lg:text-2xl;
+}
+.sectionTitle{
+    @apply text-2xl/8 text-black font-bold mt-2 mb-3 md:text-3xl/9 lg:text-4xl/11 xl:text-5xl/13;
+}
+.sectionDescription{
+    @apply text-sm text-[var(--color-gray)] font-medium md:text-base lg:text-lg;
+}

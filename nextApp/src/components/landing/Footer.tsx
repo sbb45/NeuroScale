@@ -15,6 +15,7 @@ const SOCIAL_ICONS: Record<SocialKey, string> = {
 const SOCIAL_LABELS: Record<SocialKey, string> = {
     whatsapp: 'WhatsApp',
     telegram: 'Telegram',
+    max: 'Max',
 };
 
 function normalizeInput(value: string) {

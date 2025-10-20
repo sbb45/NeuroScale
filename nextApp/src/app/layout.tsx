@@ -20,7 +20,7 @@ const metadataBase = (() => {
 export const metadata: Metadata = {
     metadataBase,
     title: {
-        default: 'NeuroScale — Генеративный AI под задачи бизнеса',
+        default: 'NeuroScale',
         template: '%s | NeuroScale',
     },
     description:
@@ -39,19 +39,29 @@ export const metadata: Metadata = {
         type: 'website',
         url: metadataBase,
         siteName: 'NeuroScale',
-        title: 'NeuroScale — Генеративный AI под задачи бизнеса',
+        title: 'NeuroScale',
         description:
             'AI-решения для роста продаж, маркетинга и клиентского сервиса. Комплексная поддержка от стратегии до внедрения и обучения.',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'NeuroScale — Генеративный AI под задачи бизнеса',
+        title: 'NeuroScale',
         description:
             'AI-решения для роста продаж, маркетинга и клиентского сервиса. Комплексная поддержка от стратегии до внедрения и обучения.',
     },
     robots: {
         index: true,
         follow: true,
+    },
+    manifest: '/site.webmanifest',
+    icons: {
+        icon: [
+            { url: '/favicon.ico', sizes: 'any', type: 'image/x-icon' },
+            { url: '/favicon.svg', type: 'image/svg+xml' },
+            { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+        ],
+        apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+        other: [{ rel: 'mask-icon', url: '/favicon.svg', color: '#004FED' }],
     },
 };
 

@@ -26,6 +26,10 @@
     --container-2xl: 1440px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--blue-dark);
   color: var(--foreground);
@@ -60,4 +64,7 @@ body {
 }
 .sectionDescription{
     @apply text-sm text-[var(--color-gray)] font-medium md:text-base lg:text-lg;
+}
+.customSpan{
+    border-radius:0 !important;
 }

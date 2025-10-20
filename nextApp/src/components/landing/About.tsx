@@ -10,7 +10,7 @@ const About = ({ abouts, statistics, title }: { abouts: AboutT[], statistics: St
     const [open, setOpen] = useState<number | null>(null);
 
     return (
-        <section className={"bg-white rounded-4xl relative z-12 -mt-10 rounded-b-none py-16 lg:rounded-[80px] lg:rounded-b-none lg:pt-26 lg:pb-26 lg:-mt-16"}>
+        <section id="about" className={"bg-white rounded-4xl relative z-12 -mt-10 rounded-b-none py-16 lg:rounded-[80px] lg:rounded-b-none lg:pt-26 lg:pb-26 lg:-mt-16"}>
             <div className={'container mx-auto flex flex-col justify-between items-center gap-6 mb-18 md:mb-32 md:flex-row md:gap-10'}>
                 <div className={'relative w-[80%] lg:w-[50%] max-w-[566px] aspect-square'}>
                     <Image

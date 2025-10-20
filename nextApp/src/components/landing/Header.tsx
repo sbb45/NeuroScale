@@ -1,55 +1,91 @@
-'use client'
-import React, {useState} from 'react';
+'use client';
+import React, { useCallback, useState } from 'react';
 import Image from 'next/image';
-import Link from "next/link";
-import {AnimatePresence, motion, Variants} from "framer-motion";
-import { Menu, X } from "lucide-react";
+import Link from 'next/link';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+
+type NavItem = {
+    label: string;
+    section: string;
+};
+
+const NAV_ITEMS: NavItem[] = [
+    { label: 'О нас', section: 'about' },
+    { label: 'Возможности', section: 'possibilities' },
+    { label: 'Этапы', section: 'stages' },
+    { label: 'Кейсы', section: 'projects' },
+    { label: 'FAQ', section: 'faq' },
+];
 
 const Header = () => {
     // Меню
     const [menuOpen, setMenuOpen] = useState(false);
+    const pathname = usePathname();
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
-    }
+    };
 
     // Анимации
     const menuVariants: Variants = {
-        hidden:  { opacity: 0, height: 0 },
+        hidden: { opacity: 0, height: 0 },
         visible: { opacity: 1, height: 'auto' },
-        exit:    { opacity: 0, height: 0 },
+        exit: { opacity: 0, height: 0 },
     };
 
+    const handleNavClick = useCallback(
+        (section: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+            setMenuOpen(false);
+
+            if (pathname === '/') {
+                event.preventDefault();
+                const element = document.getElementById(section);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    window.history.replaceState(null, '', `/#${section}`);
+                }
+            }
+        },
+        [pathname],
+    );
+
     return (
-        <header className={"container mx-auto absolute top-0 right-0 left-0 z-50 backdrop-blur-lg md:backdrop-blur-none py-5"}>
-            <nav className={"flex items-center justify-between text-white px-3 md:px-0"}>
-                <Image src="/icons/logo.png" alt="logo" width={151} height={48} />
-                <ul className={'hidden md:flex gap-4 text-lg'}>
-                    <li><Link href="/#about">О нас</Link></li>
-                    <li><Link href="/#possibilities">Возможности</Link></li>
-                    <li><Link href="/#stages">Этапы</Link></li>
-                    <li><Link href="/#projects">Проекты</Link></li>
-                    <li><Link href="/#faq">FAQ</Link></li>
+        <header className="container mx-auto absolute top-0 right-0 left-0 z-50 py-5 backdrop-blur-lg md:backdrop-blur-none">
+            <nav className="flex items-center justify-between px-3 text-white md:px-0">
+                <Link href="/" aria-label="NeuroScale — главная">
+                    <Image src="/icons/logo.png" alt="logo" width={151} height={48} />
+                </Link>
+                <ul className="hidden gap-4 text-lg md:flex">
+                    {NAV_ITEMS.map((item) => (
+                        <li key={item.section}>
+                            <Link href={`/#${item.section}`} onClick={handleNavClick(item.section)}>
+                                {item.label}
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
                 <Link
-                    href={'/#contacts'}
-                    className={"hidden md:flex justify-center items-center gap-3.5 py-2 pr-3.5 pl-5.5 font-bold gradientBtn"}
+                    href="/#contacts"
+                    onClick={handleNavClick('contacts')}
+                    className="gradientBtn hidden items-center justify-center gap-3.5 py-2 pl-5.5 pr-3.5 font-bold md:flex"
                 >
                     Связаться
-                    <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
                         <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
                     </div>
                 </Link>
                 <button
                     onClick={toggleMenu}
-                    className={"md:hidden text-white focus:outline-none relative w-7 h-7"}
+                    className="relative h-7 w-7 text-white focus:outline-none md:hidden"
                     aria-label="Toggle Menu"
                 >
                     <motion.span
-                        key={menuOpen ? "close" : "open"}
-                        initial={{ opacity: 0, rotate: -90, scale: .8 }}
+                        key={menuOpen ? 'close' : 'open'}
+                        initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
                         animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                        exit={{ opacity: 0, rotate: 90, scale: .8 }}
-                        transition={{ duration: .3 }}
+                        exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
+                        transition={{ duration: 0.3 }}
                         className="absolute inset-0 flex items-center justify-center"
                     >
                         {menuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -65,21 +101,24 @@ const Header = () => {
                         animate="visible"
                         exit="exit"
                         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                        className={'md:hidden mt-3 text-white px-5 w-full py-6'}
+                        className="mt-3 w-full px-5 py-6 text-white md:hidden"
                     >
-                        <ul className={'gap-4 text-lg space-y-3 '}>
-                            <li><Link href="/#about">О нас</Link></li>
-                            <li><Link href="/#possibilities">Возможности</Link></li>
-                            <li><Link href="/#stages">Этапы</Link></li>
-                            <li><Link href="/#projects">Проекты</Link></li>
-                            <li><Link href="/#faq">FAQ</Link></li>
+                        <ul className="space-y-3 text-lg">
+                            {NAV_ITEMS.map((item) => (
+                                <li key={`mobile-${item.section}`}>
+                                    <Link href={`/#${item.section}`} onClick={handleNavClick(item.section)}>
+                                        {item.label}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                         <Link
-                            href={'/#contacts'}
-                            className={"flex justify-center mt-4 items-center gap-3.5 py-2 pr-3.5 pl-5.5 rounded-3xl rounded-bl-none gradientBtn font-bold"}
+                            href="/#contacts"
+                            onClick={handleNavClick('contacts')}
+                            className="mt-4 flex items-center justify-center gap-3.5 rounded-3xl rounded-bl-none py-2 pl-5.5 pr-3.5 font-bold gradientBtn"
                         >
                             Связаться
-                            <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
                                 <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
                             </div>
                         </Link>

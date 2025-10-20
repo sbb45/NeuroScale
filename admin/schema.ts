@@ -74,15 +74,24 @@ export const lists: Lists = {
             path: 'client',
             labelField: 'name',
             listView: {
-                initialColumns: ['name', 'phone','email', 'question', 'createdAt'],
+                initialColumns: ['name', 'phone','email', 'contactMethod', 'question', 'createdAt'],
                 initialSort: { field: 'createdAt', direction: 'DESC' },
             },
             description: 'Клиенты сайта',
         },
         fields: {
             name: text({ validation: { isRequired: true }, label: 'Имя' }),
-            email: text({ validation: { isRequired: true }, label: 'Электронная почта' }),
             phone: text({ validation: { isRequired: true }, label: 'Телефон' }),
+            contactMethod: select({
+                label: 'Предпочтительный канал',
+                options: [
+                    { label: 'Позвонить', value: 'call' },
+                    { label: 'Telegram', value: 'telegram' },
+                    { label: 'Max', value: 'max' },
+                    { label: 'WhatsApp', value: 'whatsapp' },
+                ],
+                defaultValue: 'call',
+            }),
             question: text({ label: 'Вопрос' }),
             createdAt: timestamp({ defaultValue: { kind: 'now' }, label: 'Создано' }),
         },
@@ -127,6 +136,70 @@ export const lists: Lists = {
                         method: 'POST',
                         headers: { 'content-type': 'application/json' },
                         body: JSON.stringify({ tags: ['cms:title'], paths: ['/'] }),
+                    }).catch(() => {});
+                }
+            },
+        }
+    }),
+    Document: list({
+        graphql: { plural: 'documents' },
+        access: {
+            operation: {
+                query: allowAll,
+                create: ({ session }) => !!session,
+                update: ({ session }) => !!session,
+                delete: ({ session }) => !!session,
+            },
+        },
+        ui: {
+            label: 'Документы',
+            singular: 'Документ',
+            plural: 'Документы',
+            path: 'documents',
+            labelField: 'title',
+            description: 'Правовые документы сайта',
+            listView: {
+                initialColumns: ['slug', 'title', 'updatedAt'],
+                initialSort: { field: 'updatedAt', direction: 'DESC' },
+            },
+        },
+        fields: {
+            slug: text({ validation: { isRequired: true }, isIndexed: 'unique', label: 'Системное имя' }),
+            title: text({ validation: { isRequired: true }, label: 'Заголовок' }),
+            description: text({ label: 'Описание' }),
+            content: document({
+                label: 'Текст',
+                formatting: {
+                    inlineMarks: {
+                        bold: true,
+                        italic: true,
+                        underline: true,
+                        strikethrough: true,
+                        code: true,
+                    },
+                    listTypes: { ordered: true, unordered: true },
+                    headingLevels: [2, 3, 4],
+                    blockTypes: {
+                        blockquote: true,
+                    },
+                    softBreaks: true,
+                },
+                links: true,
+            }),
+            createdAt: timestamp({ defaultValue: { kind: 'now' }, label: 'Создано' }),
+            updatedAt: timestamp({
+                db: { updatedAt: true },
+                label: 'Обновлено',
+            }),
+        },
+        hooks: {
+            async afterOperation({ operation }) {
+                if (['create', 'update', 'delete'].includes(operation)) {
+                    const url = `${process.env.SITE_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}`;
+                    await fetch(url, {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({ tags: ['cms:document'], paths: ['/privacy', '/consent'] }),
                     }).catch(() => {});
                 }
             },

@@ -20,12 +20,12 @@ model User {
 }
 
 model Client {
-  id        String    @id @default(cuid())
-  name      String    @default("")
-  email     String    @default("")
-  phone     String    @default("")
-  question  String    @default("")
-  createdAt DateTime? @default(now())
+  id            String    @id @default(cuid())
+  name          String    @default("")
+  phone         String    @default("")
+  contactMethod String?   @default("call")
+  question      String    @default("")
+  createdAt     DateTime? @default(now())
 }
 
 model Title {
@@ -35,6 +35,16 @@ model Title {
   title       String    @default("")
   description String    @default("")
   createdAt   DateTime? @default(now())
+}
+
+model Document {
+  id          String    @id @default(cuid())
+  slug        String    @unique @default("")
+  title       String    @default("")
+  description String    @default("")
+  content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
 }
 
 model Contact {

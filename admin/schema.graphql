@@ -114,8 +114,8 @@ input UserCreateInput {
 type Client {
   id: ID!
   name: String
-  email: String
   phone: String
+  contactMethod: String
   question: String
   createdAt: DateTime
 }
@@ -130,25 +130,39 @@ input ClientWhereInput {
   NOT: [ClientWhereInput!]
   id: IDFilter
   name: StringFilter
-  email: StringFilter
   phone: StringFilter
+  contactMethod: StringNullableFilter
   question: StringFilter
   createdAt: DateTimeNullableFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: StringNullableFilter
 }
 
 input ClientOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  email: OrderDirection
   phone: OrderDirection
+  contactMethod: OrderDirection
   question: OrderDirection
   createdAt: OrderDirection
 }
 
 input ClientUpdateInput {
   name: String
-  email: String
   phone: String
+  contactMethod: String
   question: String
   createdAt: DateTime
 }
@@ -160,8 +174,8 @@ input ClientUpdateArgs {
 
 input ClientCreateInput {
   name: String
-  email: String
   phone: String
+  contactMethod: String
   question: String
   createdAt: DateTime
 }
@@ -219,6 +233,69 @@ input TitleCreateInput {
   title: String
   description: String
   createdAt: DateTime
+}
+
+type Document {
+  id: ID!
+  slug: String
+  title: String
+  description: String
+  content: Document_content_Document
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Document_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input DocumentWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input DocumentWhereInput {
+  AND: [DocumentWhereInput!]
+  OR: [DocumentWhereInput!]
+  NOT: [DocumentWhereInput!]
+  id: IDFilter
+  slug: StringFilter
+  title: StringFilter
+  description: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input DocumentOrderByInput {
+  id: OrderDirection
+  slug: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input DocumentUpdateInput {
+  slug: String
+  title: String
+  description: String
+  content: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input DocumentUpdateArgs {
+  where: DocumentWhereUniqueInput!
+  data: DocumentUpdateInput!
+}
+
+input DocumentCreateInput {
+  slug: String
+  title: String
+  description: String
+  content: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type Contact {
@@ -721,6 +798,12 @@ type Mutation {
   updateTitles(data: [TitleUpdateArgs!]!): [Title]
   deleteTitle(where: TitleWhereUniqueInput!): Title
   deleteTitles(where: [TitleWhereUniqueInput!]!): [Title]
+  createDocument(data: DocumentCreateInput!): Document
+  createdocuments(data: [DocumentCreateInput!]!): [Document]
+  updateDocument(where: DocumentWhereUniqueInput!, data: DocumentUpdateInput!): Document
+  updatedocuments(data: [DocumentUpdateArgs!]!): [Document]
+  deleteDocument(where: DocumentWhereUniqueInput!): Document
+  deletedocuments(where: [DocumentWhereUniqueInput!]!): [Document]
   createContact(data: ContactCreateInput!): Contact
   createContacts(data: [ContactCreateInput!]!): [Contact]
   updateContact(where: ContactWhereUniqueInput!, data: ContactUpdateInput!): Contact
@@ -807,6 +890,9 @@ type Query {
   title(where: TitleWhereUniqueInput!): Title
   titles(where: TitleWhereInput! = {}, orderBy: [TitleOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TitleWhereUniqueInput): [Title!]
   titlesCount(where: TitleWhereInput! = {}): Int
+  document(where: DocumentWhereUniqueInput!): Document
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
   contact(where: ContactWhereUniqueInput!): Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int

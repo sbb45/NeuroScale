@@ -12,6 +12,16 @@ export type About = { id: string; title: string; text: string; createdAt: string
 export type Statistic = { id: string; title: string; text: string; createdAt: string };
 export type Faq = { id: string; question: string; answer: string; createdAt: string };
 
+export type Document = {
+    id: string;
+    slug: string;
+    title: string;
+    description?: string;
+    content: { document: any };
+    createdAt: string;
+    updatedAt: string;
+};
+
 export type HomeData = {
     titles: Title[];
     contacts: Contact[];
@@ -58,6 +68,17 @@ const GQL = `
   }
 `;
 
+const DOCUMENT_GQL = `
+  query Document($slug: String!) {
+    document(where: { slug: $slug }) {
+      id slug title description createdAt updatedAt
+      content {
+        document
+      }
+    }
+  }
+`;
+
 
 async function fetchHome(): Promise<HomeData> {
     try {
@@ -95,6 +116,33 @@ async function fetchHome(): Promise<HomeData> {
 export const getHome = unstable_cache(fetchHome, ['cms:home'], {
     revalidate: 600,
     tags: ['cms:title','cms:contact','cms:about','cms:statistic','cms:possibilitie','cms:stage','cms:case','cms:faq'],
+});
+
+async function fetchDocument(slug: string): Promise<Document | null> {
+    if (!slug) return null;
+    try {
+        const res = await fetch(process.env.KEYSTONE_GRAPHQL_URL!, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                ...(process.env.KEYSTONE_API_TOKEN ? { Authorization: `Bearer ${process.env.KEYSTONE_API_TOKEN}` } : {}),
+            },
+            body: JSON.stringify({ query: DOCUMENT_GQL, variables: { slug } }),
+            cache: 'no-store',
+        });
+        if (!res.ok) return null;
+        const json = await res.json();
+        if (json.errors) console.error('GQL document errors:', json.errors.map((e: any) => e.message));
+        return json.data?.document ?? null;
+    } catch (e) {
+        console.error('Keystone document fetch failed:', e);
+        return null;
+    }
+}
+
+export const getDocument = unstable_cache(fetchDocument, ['cms:document'], {
+    revalidate: 600,
+    tags: ['cms:document'],
 });
 
 // при желании: быстрые геттеры без доп. запросов

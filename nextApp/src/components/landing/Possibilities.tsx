@@ -33,7 +33,7 @@ export default function Possibilities({items, title}: {items: PossibilitieT[], t
 
     return (
         <>
-            <section className="bg-[#EAFCFE] py-14 rounded-4xl rounded-t-none lg:rounded-[80px] lg:rounded-t-none md:py-20 relative z-12">
+            <section id="possibilities" className="bg-[#EAFCFE] py-14 rounded-4xl rounded-t-none lg:rounded-[80px] lg:rounded-t-none md:py-20 relative z-12">
                 <div className="container mx-auto text-center">
                     <p className="sectionSubtitle">{title.details}</p>
                     <h2 className="sectionTitle mx-4 max-w-[900px] md:mx-auto">{title.title}</h2>
@@ -95,11 +95,10 @@ export default function Possibilities({items, title}: {items: PossibilitieT[], t
                         >
                             {(() => {
                                 const current = open !== null ? merged[open] : null;
-                                const lines = (current?.points ?? []).map(x => x.text).filter(Boolean);
+                                const lines = (current?.points ?? []).map(x => x.name).filter(Boolean);
 
                                 return (
                                     <div className="relative bg-white rounded-[28px] w-full max-w-[720px] p-6 md:p-8 shadow-[0_24px_60px_rgba(7,24,79,0.35)]">
-                                        {/* Кнопка закрытия */}
                                         <button
                                             type="button"
                                             onClick={() => setOpen(null)}
@@ -109,8 +108,7 @@ export default function Possibilities({items, title}: {items: PossibilitieT[], t
                                             ✕
                                         </button>
 
-                                        {/* Шапка */}
-                                        <div className="flex items-start gap-3 pr-6">
+                                        <div className="flex items-center gap-3 pr-6">
                                             <div className="bg-[#EAFCFE] w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center">
                                                 <Image
                                                     src={current ? `/icons/${current.img}` : '/icons/placeholder.svg'}
@@ -125,7 +123,6 @@ export default function Possibilities({items, title}: {items: PossibilitieT[], t
                                             </div>
                                         </div>
 
-                                        {/* Контент: список points или мягкий фоллбек */}
                                         <div className="mt-4 space-y-2 sm:space-y-3">
                                             {lines.length > 0 ? (
                                                 lines.map((line, i) => (

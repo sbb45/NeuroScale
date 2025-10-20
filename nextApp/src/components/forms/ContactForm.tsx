@@ -3,6 +3,7 @@ import React, { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Title as TitleT } from '@/lib/cms';
+import {X} from "lucide-react";
 
 type ContactFormProps = {
     form: TitleT;
@@ -66,6 +67,16 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
             onSubmit={handleSubmit}
             className={`relative z-10 flex w-full max-w-[540px] flex-col items-center justify-center space-y-3 rounded-4xl bg-white px-4 py-8 text-center shadow-[0_0_40px_10px_rgba(0,79,237,0.2)] md:px-12 md:py-10 ${className ?? ''}`}
         >
+            {onSubmitted ? (
+                <button
+                    type="button"
+                    onClick={onSubmitted}
+                    className="absolute top-3 right-4 text-[var(--blue-primary)] font-semibold cursor-pointer"
+                    aria-label="Закрыть модалку"
+                >
+                    <X size={32} />
+                </button>) : ''
+            }
             <h2 className="mb-2 text-2xl font-bold md:text-4xl">{form.title}</h2>
             {form.description ? (
                 <p className="mb-4 text-base text-[var(--gray-color)] md:mb-8 md:text-xl md:w-[90%]">{form.description}</p>

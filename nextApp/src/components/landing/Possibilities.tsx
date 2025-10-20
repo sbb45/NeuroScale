@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import {Possibilitie as PossibilitieT} from '@/lib/cms';
 import {Title as TitleT} from '@/lib/cms';
+import { X } from 'lucide-react';
 
 const imgs = [
     'possibilities-3.svg',
@@ -102,10 +103,10 @@ export default function Possibilities({items, title}: {items: PossibilitieT[], t
                                         <button
                                             type="button"
                                             onClick={() => setOpen(null)}
-                                            className="absolute top-3 right-3 text-[var(--blue-primary)] font-semibold cursor-pointer"
+                                            className="absolute top-3 right-4 text-[var(--blue-primary)] font-semibold cursor-pointer"
                                             aria-label="Закрыть модалку"
                                         >
-                                            ✕
+                                            <X size={32} />
                                         </button>
 
                                         <div className="flex items-center gap-3 pr-6">

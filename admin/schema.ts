@@ -74,7 +74,7 @@ export const lists: Lists = {
             path: 'client',
             labelField: 'name',
             listView: {
-                initialColumns: ['name', 'phone','email', 'contactMethod', 'question', 'createdAt'],
+                initialColumns: ['name', 'phone', 'contactMethod', 'question', 'createdAt'],
                 initialSort: { field: 'createdAt', direction: 'DESC' },
             },
             description: 'Клиенты сайта',

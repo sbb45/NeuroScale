@@ -5,8 +5,8 @@ const ENDPOINT = process.env.KEYSTONE_GRAPHQL_URL ?? 'http://localhost:4000/admi
 
 export async function POST(req: NextRequest) {
     try {
-        const { name, email, phone, question, contactMethod } = await req.json();
-        const method = ['call', 'telegram', 'vk', 'whatsapp'].includes(contactMethod)
+        const { name, phone, question, contactMethod } = await req.json();
+        const method = ['call', 'telegram', 'max', 'whatsapp'].includes(contactMethod)
             ? contactMethod
             : 'call';
 
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
             $name: String!
             $phone: String!
             $question: String
-            $contactMethod: ClientContactMethodType
+            $contactMethod: String        
           ) {
             createClient(
               data: { name: $name, phone: $phone, question: $question, contactMethod: $contactMethod}
@@ -39,7 +39,6 @@ export async function POST(req: NextRequest) {
             variables: { name, phone, question, contactMethod: method },
             requestHeaders: headers,
         });
-        console.log(data);
         return NextResponse.json({client: data.createClient })
     }catch (err: any){
         return NextResponse.json(

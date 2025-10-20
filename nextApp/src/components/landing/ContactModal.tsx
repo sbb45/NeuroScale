@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ContactForm from '@/components/forms/ContactForm';
 import { Title as TitleT } from '@/lib/cms';
+import {X} from "lucide-react";
 
 type ContactModalProps = {
     open: boolean;

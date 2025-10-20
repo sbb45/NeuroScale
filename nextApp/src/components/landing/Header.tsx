@@ -29,9 +29,9 @@ const Header = () => {
 
     // Анимации
     const menuVariants: Variants = {
-        hidden: { opacity: 0, height: 0 },
-        visible: { opacity: 1, height: 'auto' },
-        exit: { opacity: 0, height: 0 },
+        hidden:  { opacity: 0, scaleY: 0 },
+        visible: { opacity: 1, scaleY: 1 },
+        exit:    { opacity: 0, scaleY: 0 },
     };
 
     const handleNavClick = useCallback(
@@ -51,7 +51,7 @@ const Header = () => {
     );
 
     return (
-        <header className="container mx-auto absolute top-0 right-0 left-0 z-50 py-5 backdrop-blur-lg md:backdrop-blur-none">
+        <header className="container mx-auto absolute top-0 right-0 left-0 z-20 py-5">
             <nav className="flex items-center justify-between px-3 text-white md:px-0">
                 <Link href="/" aria-label="NeuroScale — главная">
                     <Image src="/icons/logo.png" alt="logo" width={151} height={48} />
@@ -100,28 +100,30 @@ const Header = () => {
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                        className="mt-3 w-full px-5 py-6 text-white md:hidden"
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                        className="md:hidden origin-top overflow-hidden absolute left-0 right-0 top-full"
                     >
-                        <ul className="space-y-3 text-lg">
-                            {NAV_ITEMS.map((item) => (
-                                <li key={`mobile-${item.section}`}>
-                                    <Link href={`/#${item.section}`} onClick={handleNavClick(item.section)}>
-                                        {item.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                        <Link
-                            href="/#contacts"
-                            onClick={handleNavClick('contacts')}
-                            className="mt-4 flex items-center justify-center gap-3.5 rounded-3xl rounded-bl-none py-2 pl-5.5 pr-3.5 font-bold gradientBtn"
-                        >
-                            Связаться
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                                <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
-                            </div>
-                        </Link>
+                        <div className="mt-3 w-full px-5 py-6 text-white bg-black/90">
+                            <ul className="space-y-3 text-lg">
+                                {NAV_ITEMS.map((item) => (
+                                    <li key={`mobile-${item.section}`}>
+                                        <Link href={`/#${item.section}`} onClick={handleNavClick(item.section)}>
+                                            {item.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                            <Link
+                                href="/#contacts"
+                                onClick={handleNavClick('contacts')}
+                                className="mt-4 flex items-center justify-center gap-3.5 rounded-3xl rounded-bl-none py-2 pl-5.5 pr-3.5 font-bold gradientBtn"
+                            >
+                                Связаться
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+                                    <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
+                                </div>
+                            </Link>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

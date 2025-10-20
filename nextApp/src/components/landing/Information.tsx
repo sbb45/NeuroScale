@@ -17,7 +17,7 @@ const Information = ({ items, faqs, form }: InformationProps) => {
 
     return (
         <section id="faq" className="bg-white pt-10 pb-32 md:pt-16 md:pb-46">
-            <div className="container mx-auto grid grid-cols-1 px-4 lg:grid-cols-2 lg:gap-28">
+            <div className="container mx-auto grid grid-cols-1 px-4 lg:grid-cols-2 items-start lg:gap-28">
                 <div className="flex flex-col items-center justify-center md:justify-start md:items-start">
                     <p className="sectionSubtitle -mb-2 md:mb-2 md:text-start">{faqs.details}</p>
                     <h2 className="sectionTitle text-center md:text-start">{faqs.title}</h2>
@@ -75,7 +75,7 @@ const Information = ({ items, faqs, form }: InformationProps) => {
                         })}
                     </div>
                 </div>
-                <div className="relative mx-auto lg:ml-auto mt-12 max-w-[540px]">
+                <div className="relative mx-auto lg:ml-auto mt-12 max-w-[540px]" id="contacts">
                     <ContactForm form={form} />
                     <span className="absolute -bottom-1 left-0 z-0 h-44 w-full rounded-4xl bg-[var(--blue-primary)]" />
                     <span className="absolute -top-4 -right-4 md:-top-8 md:-right-8 z-0 hidden h-40 w-40 md:h-64 md:w-64 !rounded-4xl gradientBlock md:block" />

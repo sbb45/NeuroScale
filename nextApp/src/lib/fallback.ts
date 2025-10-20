@@ -8,6 +8,7 @@ export const fallbacks = {
     cases: [] as import('./cms').Case[],
     faqs: [] as import('./cms').Faq[],
 };
+
 export const aboutsFallback = [
     {id: 'cmgy2yg1w00009hwszpbdx0s', title: "25+ лет опыта в маркетинге и продажах", text: 'wdw', createdAt: '2025-10-19T19:09:03.808Z'},
     {id: 'cmgy2yg1w00009hwszpbdis', title: "Опытная команда разработчиков",  text: 'wdw', createdAt: '2025-10-19T19:09:03.808Z'},

@@ -2,18 +2,24 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
+import {Possibilitie as PossibilitieT} from '@/lib/cms';
+import {Title as TitleT} from '@/lib/cms';
 
-const possibilities = [
-    { img: 'possibilities-3.svg', title: 'Клиентский сервис', text: 'Автоматизация общения…', points: [{ text: 'ggreeg' }, { text: 'gerger' }] },
-    { img: 'possibilities-1.svg', title: 'Маркетинг и продажи', text: 'Оптимизация анализа…', points: [{ text: 'ggreeg' }, { text: 'gerger' }] },
-    { img: 'possibilities-2.svg', title: 'Внутренние процессы', text: 'Оптимизация процессов…', points: [{ text: 'ggreeg' }, { text: 'gerger' }] },
-    { img: 'possibilities-5.svg', title: 'Обучение и аттестация', text: 'Автоматизация обучения…', points: [{ text: 'ggreeg' }, { text: 'gerger' }] },
-    { img: 'possibilities-4.svg', title: 'HR и рекрутинг', text: 'Повышение скорости…', points: [{ text: 'ggreeg' }, { text: 'gerger' }] },
-    { img: 'possibilities-6.svg', title: 'Отраслевая кастомизация', text: 'Адаптация ИИ…', points: [{ text: 'ggreeg' }, { text: 'gerger' }] },
+const imgs = [
+    'possibilities-3.svg',
+    'possibilities-1.svg',
+    'possibilities-2.svg',
+    'possibilities-5.svg',
+    'possibilities-4.svg',
+    'possibilities-6.svg',
 ];
 
-export default function Possibilities() {
+export default function Possibilities({items, title}: {items: PossibilitieT[], title: TitleT}) {
     const [open, setOpen] = useState<number | null>(null);
+    const merged = items.map((item, index) => ({
+        ...item,
+        img: imgs[index],
+    }));;
 
     useEffect(() => {
         const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(null);
@@ -27,13 +33,13 @@ export default function Possibilities() {
 
     return (
         <>
-            <section className="bg-[#EAFCFE] py-14 rounded-4x rounded-t-none lg:rounded-[80px] lg:rounded-t-none md:py-20 relative">
+            <section className="bg-[#EAFCFE] py-14 rounded-4xl rounded-t-none lg:rounded-[80px] lg:rounded-t-none md:py-20 relative z-12">
                 <div className="container mx-auto text-center">
-                    <p className="sectionSubtitle">Возможности</p>
-                    <h2 className="sectionTitle mx-4 max-w-[900px] md:mx-auto">Какие бизнес-процессы можно автоматизировать на базе ИИ?</h2>
+                    <p className="sectionSubtitle">{title.details}</p>
+                    <h2 className="sectionTitle mx-4 max-w-[900px] md:mx-auto">{title.title}</h2>
 
                     <div className="grid grid-cols-1 gap-4 px-4 mt-10 md:grid-cols-2 max-w-[1100px] mx-auto">
-                        {possibilities.map((p, i) => (
+                        {merged.map((p, i) => (
                             <div key={i} className="bg-white rounded-[32px] p-6 flex items-start gap-3 relative z-10">
                                 <div className="bg-[#EAFCFE] w-20 h-20 rounded-full flex items-center justify-center shrink-0">
                                     <Image src={`/icons/${p.img}`} alt="possibilitie icon" width={78} height={78} className="pointer-events-none w-14 h-14" />
@@ -69,7 +75,6 @@ export default function Possibilities() {
             <AnimatePresence>
                 {open !== null && (
                     <>
-                        {/* Оверлей */}
                         <motion.button
                             aria-label="Закрыть"
                             className="fixed inset-0 bg-black/50 z-40 cursor-pointer"
@@ -79,7 +84,6 @@ export default function Possibilities() {
                             exit={{ opacity: 0 }}
                         />
 
-                        {/* Центрированная модалка */}
                         <motion.div
                             className="fixed inset-0 z-50 flex items-center justify-center p-4"
                             initial={{ scale: 0.98, opacity: 0 }}
@@ -90,7 +94,7 @@ export default function Possibilities() {
                             aria-modal="true"
                         >
                             {(() => {
-                                const current = open !== null ? possibilities[open] : null;
+                                const current = open !== null ? merged[open] : null;
                                 const lines = (current?.points ?? []).map(x => x.text).filter(Boolean);
 
                                 return (

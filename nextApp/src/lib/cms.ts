@@ -1,13 +1,15 @@
 import 'server-only';
 import { unstable_cache } from 'next/cache';
 
-export type Title = { id: string; name: string; subtitle?: string; title: string; description?: string; createdAt: string };
+export type Title = { id: string; name: string; details?: string; title: string; description?: string; createdAt: string };
+export type PossibilitiePoint = { id: string; name: string };
+export type StagePoint = { id: string; name: string };
+export type Possibilitie = { id: string; title: string; text: string; points: PossibilitiePoint[]; createdAt: string };
+export type Stage = { id: string; title: string; text: string; happening: StagePoint[]; createdAt: string };
+export type Case = { id: string; direction: string; title: string; text: string; solution?: string; effect?: string; createdAt: string };
 export type Contact = { id: string; name: string; value: string; createdAt: string };
 export type About = { id: string; title: string; text: string; createdAt: string };
 export type Statistic = { id: string; title: string; text: string; createdAt: string };
-export type Possibilitie = { id: string; title: string; text: string; createdAt: string };
-export type Stage = { id: string; title: string; text: string; createdAt: string };
-export type Case = { id: string; direction: string; title: string; text: string; solution?: string; effect?: string; createdAt: string };
 export type Faq = { id: string; question: string; answer: string; createdAt: string };
 
 export type HomeData = {
@@ -21,22 +23,41 @@ export type HomeData = {
     faqs: Faq[];
 };
 
+
 const EMPTY: HomeData = { titles: [], contacts: [], abouts: [], statistics: [], possibilities: [], stages: [], cases: [], faqs: [] };
 
-const GQL = /* GraphQL */ `
+// запрос
+const GQL = `
   query HomepageData {
     titles(orderBy: [{ createdAt: desc }]) {
-      id name details title description createdAt   # было subtitle
+      id name details title description createdAt
     }
-    contacts(orderBy: [{ createdAt: desc }]) { id name value createdAt }
-    abouts(orderBy: [{ createdAt: desc }]) { id title text createdAt }
-    statistics(orderBy: [{ createdAt: desc }]) { id title text createdAt }
-    possibilities(orderBy: [{ createdAt: desc }]) { id title text createdAt }
-    stages(orderBy: [{ createdAt: desc }]) { id title text createdAt }
-    cases(orderBy: [{ createdAt: desc }]) { id direction title text solution effect createdAt }
-    faqs(orderBy: [{ createdAt: desc }]) { id question answer createdAt }
+    contacts(orderBy: [{ createdAt: desc }]) {
+      id name value createdAt
+    }
+    abouts(orderBy: [{ createdAt: desc }]) {
+      id title text createdAt
+    }
+    statistics(orderBy: [{ createdAt: desc }]) {
+      id title text createdAt
+    }
+    possibilities(orderBy: [{ createdAt: desc }]) {
+      id title text createdAt
+      points { id name }
+    }
+    stages(orderBy: [{ createdAt: desc }]) {
+      id title text createdAt
+      happening { id name }
+    }
+    cases(orderBy: [{ createdAt: desc }]) {
+      id direction title text solution effect createdAt
+    }
+    faqs(orderBy: [{ createdAt: desc }]) {
+      id question answer createdAt
+    }
   }
 `;
+
 
 async function fetchHome(): Promise<HomeData> {
     try {

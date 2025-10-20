@@ -32,7 +32,7 @@ const Header = () => {
                 </ul>
                 <Link
                     href={'/#contacts'}
-                    className={"hidden md:flex justify-center items-center gap-3.5 py-2 pr-3.5 pl-5.5 gradientBtn"}
+                    className={"hidden md:flex justify-center items-center gap-3.5 py-2 pr-3.5 pl-5.5 font-bold gradientBtn"}
                 >
                     Связаться
                     <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center">

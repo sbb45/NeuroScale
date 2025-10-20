@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const Footer = () => {
     return (
-        <footer className="pt-14 bg-[linear-gradient(110deg,#000000_3%,#002877_45%)] relative overflow-hidden">
+        <footer className="pt-14 bg-[linear-gradient(110deg,#000000_3%,#002877_45%)] relative z-12 rounded-4xl rounded-b-none overflow-hidden -mt-10 lg:-mt-16 lg:lg:rounded-[80px] lg:rounded-b-none">
             <div className={"container mx-auto px-4 text-white"}>
                 <div className={"flex justify-center items-center flex-col md:flex-row md:justify-between"}>
                     <div className={"mb-10 flex justify-between items-end gap-5 md:flex-col"}>

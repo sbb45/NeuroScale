@@ -2,55 +2,36 @@
 import React, { useState }from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from 'framer-motion';
+import {Stage as StageT} from '@/lib/cms';
+import {Title as TitleT} from '@/lib/cms';
 
-const stages = [
-  {
-    img: "stages-2.svg",
-    title: "Диагностика и выявление потребностей",
-    text: "Задача: понять специфику бизнеса клиента, определить, где ИИ может принести наибольшую пользу",
-      more: 'fee',
-  },
-  {
-    img: "possibilities-6.svg",
-    title: "AI-аудит и проектирование решений",
-    text: "Задача: сформировать требования и аргументировать целесообразность внедрения ИИ-решений",
-      more: 'fee',
-  },
-  {
-    img: "stages-4.svg",
-    title: "Разработка и внедрение ИИ-системы",
-    text: "Задача: реализовать индивидуальные решения под цели клиента и встроить их в бизнес-процессы",
-      more: 'fee',
-  },
-  {
-    img: "stages-1.svg",
-    title: "Тестирование и адаптация",
-    text: "Задача: убедиться, что система работает корректно и приносит пользу",
-      more: 'fee',
-  },
-  {
-    img: "stages-3.svg",
-    title: "Обучение и сопровождение",
-    text: "Задача: обеспечить самостоятельную работу с системой и стабильную техническую поддержку",
-      more: 'fee',
-  },
+const imgs = [
+    "stages-2.svg",
+    "possibilities-6.svg",
+    "stages-4.svg",
+    "stages-1.svg",
+    "stages-3.svg",
 ];
 
-const Stages = () => {
+const Stages = ({items, title}: {items: StageT[], title: TitleT}) => {
     const [open, setOpen] = useState<number | null>(null);
+    const merged = items.map((item, index) => ({
+        ...item,
+        img: imgs[index],
+    }));
 
   return (
-    <section className="bg-[linear-gradient(-12deg,#000000_3%,#002877_48%,#000000_100%)] relative overflow-hidden">
-      <div className="container mx-auto px-4 py-16 md:py-24 z-10 relative">
+    <section className="bg-[linear-gradient(-12deg,#000000_3%,#002877_48%,#000000_100%)] relative z-10 overflow-hidden -mt-10 lg:-mt-16">
+      <div className="container mx-auto px-4 py-24 md:py-40 z-10 relative">
         <h2 className="sectionTitle !text-white text-center">
-          Основные этапы работы
+            {title.title}
         </h2>
 
-        <div className="relative mt-14 md:mt-16 lg:mt-20">
+        <div className="relative mt-8 md:mt-16 lg:mt-20">
           <span className="pointer-events-none absolute top-0 bottom-0 left-1/2 -translate-x-1/2 bg-white w-[4px] rounded-full" />
 
             <div className="flex flex-col gap-16 md:gap-12 lg:gap-16 py-14">
-                {stages.map((stage, index) => {
+                {merged.map((stage, index) => {
                     const isLeft = index % 2 === 0;
 
                     return (
@@ -96,7 +77,7 @@ const Stages = () => {
                                         >
                                             <div className="mt-4 max-w-[600px] rounded-[28px] bg-[image:var(--gradient-blue)] text-white px-6 py-6 shadow-[0_24px_60px_rgba(7,24,79,0.35)]">
                                                 <p className="text-sm leading-6 md:text-base md:leading-7">
-                                                    {stage.more ?? stage.text}
+                                                    {stage.happening}
                                                 </p>
                                             </div>
                                         </motion.div>

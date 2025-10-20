@@ -360,6 +360,8 @@ type Possibilitie {
   id: ID!
   title: String
   text: String
+  points(where: PossibilitiePointWhereInput! = {}, orderBy: [PossibilitiePointOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PossibilitiePointWhereUniqueInput): [PossibilitiePoint!]
+  pointsCount(where: PossibilitiePointWhereInput! = {}): Int
   createdAt: DateTime
 }
 
@@ -374,7 +376,14 @@ input PossibilitieWhereInput {
   id: IDFilter
   title: StringFilter
   text: StringFilter
+  points: PossibilitiePointManyRelationFilter
   createdAt: DateTimeNullableFilter
+}
+
+input PossibilitiePointManyRelationFilter {
+  every: PossibilitiePointWhereInput
+  some: PossibilitiePointWhereInput
+  none: PossibilitiePointWhereInput
 }
 
 input PossibilitieOrderByInput {
@@ -387,7 +396,15 @@ input PossibilitieOrderByInput {
 input PossibilitieUpdateInput {
   title: String
   text: String
+  points: PossibilitiePointRelateToManyForUpdateInput
   createdAt: DateTime
+}
+
+input PossibilitiePointRelateToManyForUpdateInput {
+  disconnect: [PossibilitiePointWhereUniqueInput!]
+  set: [PossibilitiePointWhereUniqueInput!]
+  create: [PossibilitiePointCreateInput!]
+  connect: [PossibilitiePointWhereUniqueInput!]
 }
 
 input PossibilitieUpdateArgs {
@@ -398,13 +415,21 @@ input PossibilitieUpdateArgs {
 input PossibilitieCreateInput {
   title: String
   text: String
+  points: PossibilitiePointRelateToManyForCreateInput
   createdAt: DateTime
+}
+
+input PossibilitiePointRelateToManyForCreateInput {
+  create: [PossibilitiePointCreateInput!]
+  connect: [PossibilitiePointWhereUniqueInput!]
 }
 
 type Stage {
   id: ID!
   title: String
   text: String
+  happening(where: StagePointWhereInput! = {}, orderBy: [StagePointOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: StagePointWhereUniqueInput): [StagePoint!]
+  happeningCount(where: StagePointWhereInput! = {}): Int
   createdAt: DateTime
 }
 
@@ -419,7 +444,14 @@ input StageWhereInput {
   id: IDFilter
   title: StringFilter
   text: StringFilter
+  happening: StagePointManyRelationFilter
   createdAt: DateTimeNullableFilter
+}
+
+input StagePointManyRelationFilter {
+  every: StagePointWhereInput
+  some: StagePointWhereInput
+  none: StagePointWhereInput
 }
 
 input StageOrderByInput {
@@ -432,7 +464,15 @@ input StageOrderByInput {
 input StageUpdateInput {
   title: String
   text: String
+  happening: StagePointRelateToManyForUpdateInput
   createdAt: DateTime
+}
+
+input StagePointRelateToManyForUpdateInput {
+  disconnect: [StagePointWhereUniqueInput!]
+  set: [StagePointWhereUniqueInput!]
+  create: [StagePointCreateInput!]
+  connect: [StagePointWhereUniqueInput!]
 }
 
 input StageUpdateArgs {
@@ -443,7 +483,13 @@ input StageUpdateArgs {
 input StageCreateInput {
   title: String
   text: String
+  happening: StagePointRelateToManyForCreateInput
   createdAt: DateTime
+}
+
+input StagePointRelateToManyForCreateInput {
+  create: [StagePointCreateInput!]
+  connect: [StagePointWhereUniqueInput!]
 }
 
 type Case {
@@ -551,6 +597,106 @@ input FaqCreateInput {
   createdAt: DateTime
 }
 
+type PossibilitiePoint {
+  id: ID!
+  name: String
+  possibilitie: Possibilitie
+}
+
+input PossibilitiePointWhereUniqueInput {
+  id: ID
+}
+
+input PossibilitiePointWhereInput {
+  AND: [PossibilitiePointWhereInput!]
+  OR: [PossibilitiePointWhereInput!]
+  NOT: [PossibilitiePointWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  possibilitie: PossibilitieWhereInput
+}
+
+input PossibilitiePointOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input PossibilitiePointUpdateInput {
+  name: String
+  possibilitie: PossibilitieRelateToOneForUpdateInput
+}
+
+input PossibilitieRelateToOneForUpdateInput {
+  create: PossibilitieCreateInput
+  connect: PossibilitieWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PossibilitiePointUpdateArgs {
+  where: PossibilitiePointWhereUniqueInput!
+  data: PossibilitiePointUpdateInput!
+}
+
+input PossibilitiePointCreateInput {
+  name: String
+  possibilitie: PossibilitieRelateToOneForCreateInput
+}
+
+input PossibilitieRelateToOneForCreateInput {
+  create: PossibilitieCreateInput
+  connect: PossibilitieWhereUniqueInput
+}
+
+type StagePoint {
+  id: ID!
+  name: String
+  stage: Stage
+}
+
+input StagePointWhereUniqueInput {
+  id: ID
+}
+
+input StagePointWhereInput {
+  AND: [StagePointWhereInput!]
+  OR: [StagePointWhereInput!]
+  NOT: [StagePointWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  stage: StageWhereInput
+}
+
+input StagePointOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input StagePointUpdateInput {
+  name: String
+  stage: StageRelateToOneForUpdateInput
+}
+
+input StageRelateToOneForUpdateInput {
+  create: StageCreateInput
+  connect: StageWhereUniqueInput
+  disconnect: Boolean
+}
+
+input StagePointUpdateArgs {
+  where: StagePointWhereUniqueInput!
+  data: StagePointUpdateInput!
+}
+
+input StagePointCreateInput {
+  name: String
+  stage: StageRelateToOneForCreateInput
+}
+
+input StageRelateToOneForCreateInput {
+  create: StageCreateInput
+  connect: StageWhereUniqueInput
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -617,6 +763,18 @@ type Mutation {
   updateFaqs(data: [FaqUpdateArgs!]!): [Faq]
   deleteFaq(where: FaqWhereUniqueInput!): Faq
   deleteFaqs(where: [FaqWhereUniqueInput!]!): [Faq]
+  createPossibilitiePoint(data: PossibilitiePointCreateInput!): PossibilitiePoint
+  createpossibilitiePoints(data: [PossibilitiePointCreateInput!]!): [PossibilitiePoint]
+  updatePossibilitiePoint(where: PossibilitiePointWhereUniqueInput!, data: PossibilitiePointUpdateInput!): PossibilitiePoint
+  updatepossibilitiePoints(data: [PossibilitiePointUpdateArgs!]!): [PossibilitiePoint]
+  deletePossibilitiePoint(where: PossibilitiePointWhereUniqueInput!): PossibilitiePoint
+  deletepossibilitiePoints(where: [PossibilitiePointWhereUniqueInput!]!): [PossibilitiePoint]
+  createStagePoint(data: StagePointCreateInput!): StagePoint
+  createstagePoints(data: [StagePointCreateInput!]!): [StagePoint]
+  updateStagePoint(where: StagePointWhereUniqueInput!, data: StagePointUpdateInput!): StagePoint
+  updatestagePoints(data: [StagePointUpdateArgs!]!): [StagePoint]
+  deleteStagePoint(where: StagePointWhereUniqueInput!): StagePoint
+  deletestagePoints(where: [StagePointWhereUniqueInput!]!): [StagePoint]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -670,6 +828,12 @@ type Query {
   faq(where: FaqWhereUniqueInput!): Faq
   faqs(where: FaqWhereInput! = {}, orderBy: [FaqOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FaqWhereUniqueInput): [Faq!]
   faqsCount(where: FaqWhereInput! = {}): Int
+  possibilitiePoint(where: PossibilitiePointWhereUniqueInput!): PossibilitiePoint
+  possibilitiePoints(where: PossibilitiePointWhereInput! = {}, orderBy: [PossibilitiePointOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PossibilitiePointWhereUniqueInput): [PossibilitiePoint!]
+  possibilitiePointsCount(where: PossibilitiePointWhereInput! = {}): Int
+  stagePoint(where: StagePointWhereUniqueInput!): StagePoint
+  stagePoints(where: StagePointWhereInput! = {}, orderBy: [StagePointOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: StagePointWhereUniqueInput): [StagePoint!]
+  stagePointsCount(where: StagePointWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

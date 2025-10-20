@@ -59,17 +59,19 @@ model Statistic {
 }
 
 model Possibilitie {
-  id        String    @id @default(cuid())
-  title     String    @default("")
-  text      String    @default("")
-  createdAt DateTime? @default(now())
+  id        String              @id @default(cuid())
+  title     String              @default("")
+  text      String              @default("")
+  points    PossibilitiePoint[] @relation("PossibilitiePoint_possibilitie")
+  createdAt DateTime?           @default(now())
 }
 
 model Stage {
-  id        String    @id @default(cuid())
-  title     String    @default("")
-  text      String    @default("")
-  createdAt DateTime? @default(now())
+  id        String       @id @default(cuid())
+  title     String       @default("")
+  text      String       @default("")
+  happening StagePoint[] @relation("StagePoint_stage")
+  createdAt DateTime?    @default(now())
 }
 
 model Case {
@@ -87,4 +89,22 @@ model Faq {
   question  String    @default("")
   answer    String    @default("")
   createdAt DateTime? @default(now())
+}
+
+model PossibilitiePoint {
+  id             String        @id @default(cuid())
+  name           String        @default("")
+  possibilitie   Possibilitie? @relation("PossibilitiePoint_possibilitie", fields: [possibilitieId], references: [id])
+  possibilitieId String?       @map("possibilitie")
+
+  @@index([possibilitieId])
+}
+
+model StagePoint {
+  id      String  @id @default(cuid())
+  name    String  @default("")
+  stage   Stage?  @relation("StagePoint_stage", fields: [stageId], references: [id])
+  stageId String? @map("stage")
+
+  @@index([stageId])
 }

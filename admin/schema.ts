@@ -108,7 +108,7 @@ export const lists: Lists = {
             labelField: 'title',
             description: 'Заголовки блоков',
             listView: {
-                initialColumns: ['name','description', 'title', 'details', 'createdAt'],
+                initialColumns: ['name', 'title', 'details', 'description', 'createdAt'],
                 initialSort: { field: 'createdAt', direction: 'DESC' },
             },
         },
@@ -278,6 +278,18 @@ export const lists: Lists = {
         fields: {
             title: text({ validation: { isRequired: true }, label: 'Заголовок' }),
             text:  text({ validation: { isRequired: true }, label: 'Описание' }),
+            points: relationship({
+                ref: 'PossibilitiePoint.possibilitie',
+                many: true,
+                ui: {
+                    displayMode: 'cards',
+                    cardFields: ['name'],
+                    inlineCreate: { fields: ['name'] },
+                    inlineEdit: { fields: ['name'] },
+                    inlineConnect: true,
+                },
+                label: 'Пункты',
+            }),
             createdAt: timestamp({ defaultValue: { kind: 'now' }, label: 'Создано' }),
         },
         hooks: {
@@ -316,7 +328,19 @@ export const lists: Lists = {
         },
         fields: {
             title: text({ validation: { isRequired: true }, label: 'Заголовок' }),
-            text:  text({ validation: { isRequired: true }, label: 'Описание' }),
+            text:  text({ validation: { isRequired: true }, label: 'Цель' }),
+            happening: relationship({
+                ref: 'StagePoint.stage',
+                many: true,
+                ui: {
+                    displayMode: 'cards',
+                    cardFields: ['name'],
+                    inlineCreate: { fields: ['name'] },
+                    inlineEdit: { fields: ['name'] },
+                    inlineConnect: true,
+                },
+                label: 'Что происходит',
+            }),
             createdAt: timestamp({ defaultValue: { kind: 'now' }, label: 'Создано' }),
         },
         hooks: {
@@ -408,6 +432,66 @@ export const lists: Lists = {
                         method: 'POST',
                         headers: { 'content-type': 'application/json' },
                         body: JSON.stringify({ tags: ['cms:faq'], paths: ['/'] }),
+                    }).catch(() => {});
+                }
+            },
+        }
+    }),
+
+    // ========================
+    // Раздел: Дополнительные блоки
+    // ========================
+    PossibilitiePoint: list({
+        graphql: { plural: 'possibilitiePoints' },
+        access: {
+            operation: {
+                query: allowAll,
+                create: ({ session }) => !!session,
+                update: ({ session }) => !!session,
+                delete: ({ session }) => !!session,
+            },
+        },
+        ui: { isHidden: true },
+        fields: {
+            name: text({ validation: { isRequired: true }, label: 'Название' }),
+            possibilitie: relationship({ ref: 'Possibilitie.points' }),
+        },
+        hooks: {
+            async afterOperation({ operation }) {
+                if (['create', 'update', 'delete'].includes(operation)) {
+                    const url = `${process.env.SITE_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}`;
+                    await fetch(url, {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({ tags: ['cms:possibilitie'], paths: ['/'] }),
+                    }).catch(() => {});
+                }
+            },
+        }
+    }),
+    StagePoint: list({
+        graphql: { plural: 'stagePoints' },
+        access: {
+            operation: {
+                query: allowAll,
+                create: ({ session }) => !!session,
+                update: ({ session }) => !!session,
+                delete: ({ session }) => !!session,
+            },
+        },
+        ui: { isHidden: true },
+        fields: {
+            name: text({ validation: { isRequired: true }, label: 'Название' }),
+            stage: relationship({ ref: 'Stage.happening' }),
+        },
+        hooks: {
+            async afterOperation({ operation }) {
+                if (['create', 'update', 'delete'].includes(operation)) {
+                    const url = `${process.env.SITE_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}`;
+                    await fetch(url, {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({ tags: ['cms:stage'], paths: ['/'] }),
                     }).catch(() => {});
                 }
             },

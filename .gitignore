@@ -19,9 +19,6 @@
 /nextApp/.next/
 /nextApp/out/
 
-# keystone
-/admin/.keystone/
-
 # production
 /build
 

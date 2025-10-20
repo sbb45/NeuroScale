@@ -4,18 +4,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {Plus} from "lucide-react"
 import Image from "next/image";
 import Link from "next/link";
+import {Title as TitleT} from '@/lib/cms';
+import {Faq as FaqT} from '@/lib/cms';
 
 
-const faqs= [
-    {question: "Для чего нам это вообще нужно?", answer: "fr"},
-    {question: "Это безопасно? Что с персональными данными?", answer: "fr"},
-    {question: "Внедрение ИИ - это сложно?", answer: "fr"},
-    {question: "Нужно ли менять CRM или внутренние системы?", answer: "fr"},
-    {question: "Что, если сотрудники будут сопротивляться?", answer: "fr"},
-    {question: "Сколько это стоит?", answer: "fr"},
-]
-
-const Information = () => {
+const Information = ({items, faqs, form}: {items: FaqT[], faqs: TitleT, form: TitleT}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -43,13 +36,13 @@ const Information = () => {
     }
 
     return (
-        <section className={"bg-white pt-10 pb-24 md:pt-16 md:py-28"}>
+        <section className={"bg-white pt-10 pb-32 md:pt-16 md:py-46"}>
             <div className={"container mx-auto grid grid-cols-1 px-4 md:grid-cols-2 md:gap-6"}>
                 <div className={"flex justify-center items-center flex-col md:justify-start md:items-start"}>
-                    <p className={"sectionSubtitle -mb-2 md:mb-2"}>FAQ</p>
-                    <h2 className={"sectionTitle text-center md:text-start"}>Часто задаваемые вопросы</h2>
+                    <p className={"sectionSubtitle -mb-2 md:mb-2"}>{faqs.details}</p>
+                    <h2 className={"sectionTitle text-center md:text-start"}>{faqs.title}</h2>
                     <div className={"space-y-4 md:mt-4 w-full"}>
-                        {faqs.map((faq, i) => {
+                        {items.map((faq, i) => {
                             const open = openIdx === i;
                             const id = `faq-${i}`;
                             return (
@@ -98,8 +91,8 @@ const Information = () => {
                 </div>
                 <div className={"mt-12 max-w-[540px] ml-auto relative"}>
                     <form onSubmit={handleSubmit} className={"px-4 py-8 flex flex-col justify-center items-center space-y-3 text-center rounded-4xl relative z-10 md:px-12 md:py-10 bg-white shadow-[0_0_40px_10px_rgba(0,79,237,0.2)]"}>
-                        <h2 className={"text-2xl font-bold mb-2 md:text-4xl"}>Нужна помощь?</h2>
-                        <p className={"mb-4 text-base text-[var(--gray-color)] md:mb-8 md:text-xl md:w-[90%]"}>Оставьте сообщение, и мы ответим вам в ближайшее время.</p>
+                        <h2 className={"text-2xl font-bold mb-2 md:text-4xl"}>{form.title}</h2>
+                        <p className={"mb-4 text-base text-[var(--gray-color)] md:mb-8 md:text-xl md:w-[90%]"}>{form.description}</p>
                         <input type="text" placeholder="Ваше имя" required
                                className={"w-full h-12 rounded-xl px-4 border-1 border-[var(--blue-primary)]"}
                                value={name} onChange={e => setName(e.target.value)}

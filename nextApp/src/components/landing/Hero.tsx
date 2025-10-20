@@ -1,19 +1,20 @@
 import React from 'react';
 import Image from "next/image";
+import {Title as TitleT} from '@/lib/cms';
 
-const Hero = () => {
+const Hero = ({title}: {title: TitleT}) => {
     return (
-        <section className={'w-full h-[110vh] bg-[#010919] relative overflow-hidden pt-[18vh] md:pt-0 pb-[10vh]'}>
+        <section className={'w-full h-[110vh] bg-[#010919] relative overflow-hidden pt-[18vh] md:pt-0 pb-[10vh] z-10'}>
             <div className="flex flex-col justify-between h-full w-full items-center md:flex-row md:container md:mx-auto">
                 <div className={'space-y-4 text-white text-center md:text-start z-10'}>
                     <h1 className={"font-bold text-4xl md:text-6xl max-w-[700px]"}>
-                        Искусственный интеллект для роста вашего бизнеса
+                        {title.title}
                     </h1>
                     <p className={"text-lg px-3 md:px-0 md:text-2xl max-w-[500px]"}>
-                        Помогаем компаниям экономить время и деньги с помощью решений на базе ИИ
+                        {title.description}
                     </p>
                     <button className={'gradientBtn py-3 w-[90%] mx-auto font-bold text-base max-w-[420px] md:text-lg'}>
-                        Получить бесплатную консультацию
+                        {title.details}
                     </button>
                 </div>
                 <Image
@@ -29,7 +30,6 @@ const Hero = () => {
                 width={800} height={900}
                 className={'absolute opacity-20 top-40 -left-140 rotate-90 z-0 hidden md:block'}
             />
-            juuh
         </section>
     );
 };

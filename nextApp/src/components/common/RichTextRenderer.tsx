@@ -67,7 +67,7 @@ function renderNode(node: DocumentNode, index: number): React.ReactNode {
     switch (node.type) {
         case 'paragraph':
             return (
-                <p key={key} className="leading-relaxed text-white/80 md:text-lg">
+                <p key={key} className="leading-relaxed text-white/80 text-sm sm:text-base md:text-lg">
                     {renderChildren(node.children)}
                 </p>
             );
@@ -76,12 +76,12 @@ function renderNode(node: DocumentNode, index: number): React.ReactNode {
             const Tag = (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const)[Math.min(Math.max(level, 1), 6) - 1];
             const headingClasses =
                 level === 2
-                    ? 'text-2xl font-semibold text-white md:text-3xl'
+                    ? 'text-xl sm:text-2xl font-semibold text-white md:text-3xl'
                     : level === 3
                         ? 'text-xl font-semibold text-white md:text-2xl'
                         : 'text-lg font-semibold text-white/90 md:text-xl';
             return (
-                <Tag key={key} className={`${headingClasses} mt-8 first:mt-0`}>
+                <Tag key={key} className={`${headingClasses} mt-6 sm:mt-8 first:mt-0`}>
                     {renderChildren(node.children)}
                 </Tag>
             );
@@ -152,5 +152,5 @@ export default function RichTextRenderer({ value }: RichTextRendererProps) {
         return null;
     }
 
-    return <div className="space-y-6">{renderChildren(value.document)}</div>;
+    return <div className="space-y-4 sm:space-y-6">{renderChildren(value.document)}</div>;
 }

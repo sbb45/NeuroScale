@@ -201,17 +201,17 @@ export default async function PrivacyPolicyPage() {
         <main className="bg-[#0B1E3F] text-white">
             <section className="container mx-auto px-4 py-20 md:py-24">
                 <div className="mx-auto max-w-4xl space-y-8">
-                    <header className="space-y-4">
-                        <p className="text-sm uppercase tracking-[0.25em] text-white/70">Документы</p>
-                        <h1 className="text-3xl font-semibold md:text-5xl">{data.title}</h1>
-                        {data.description ? <p className="text-white/70 md:text-lg">{data.description}</p> : null}
+                    <header className="mt-10 space-y-2 sm:space-y-4">
+                        <p className="text-[12px] sm:text-sm uppercase tracking-[0.25em] text-white/70">Документы</p>
+                        <h1 className="text-xl sm:text-3xl font-semibold md:text-5xl">{data.title}</h1>
+                        {data.description ? <p className="text-white/70 text-sm md:text-lg">{data.description}</p> : null}
                     </header>
 
                     <article className="space-y-6 rounded-3xl bg-white/5 p-6 backdrop-blur md:p-10">
                         <RichTextRenderer value={doc?.content ?? FALLBACK_PRIVACY.content} />
                     </article>
 
-                        <footer className="space-y-2 text-sm text-white/60">
+                        <footer className="space-y-2 text-xs sm:text-sm text-white/60">
                             {updatedAt ? <p>Дата последнего обновления: {updatedAt}.</p> : null}
                             {!doc && (
                                 <p>

@@ -51,10 +51,15 @@ const Header = () => {
     );
 
     return (
-        <header className="container mx-auto absolute top-0 right-0 left-0 z-20 py-5">
-            <nav className="flex items-center justify-between px-3 text-white md:px-0">
+        <motion.header
+            initial={{ y: -40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed top-0 right-0 left-0 z-20 py-3 bg-[#010919] md:py-5"
+        >
+            <nav className="flex items-center justify-between container mx-auto px-3 text-white md:px-0">
                 <Link href="/" aria-label="NeuroScale — главная">
-                    <Image src="/icons/logo.png" alt="logo" width={151} height={48} />
+                    <Image src="/icons/logo.png" alt="logo" width={151} height={48} className={"w-[120px] sm:w-[151px]"} />
                 </Link>
                 <ul className="hidden gap-4 text-lg md:flex">
                     {NAV_ITEMS.map((item) => (
@@ -101,10 +106,10 @@ const Header = () => {
                         animate="visible"
                         exit="exit"
                         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                        className="md:hidden origin-top overflow-hidden absolute left-0 right-0 top-full"
+                        className="md:hidden origin-top overflow-hidden absolute left-0 right-0 top-full bg-[#010919]"
                     >
-                        <div className="w-full px-5 py-6 text-white bg-black/90">
-                            <ul className="space-y-3 text-lg">
+                        <div className="w-full px-5 py-6 text-white">
+                            <ul className="space-y-3 text-base sm:text-lg">
                                 {NAV_ITEMS.map((item) => (
                                     <li key={`mobile-${item.section}`}>
                                         <Link href={`/#${item.section}`} onClick={handleNavClick(item.section)}>
@@ -119,15 +124,15 @@ const Header = () => {
                                 className="mt-4 flex items-center justify-center gap-3.5 rounded-3xl rounded-bl-none py-2 pl-5.5 pr-3.5 font-bold gradientBtn"
                             >
                                 Связаться
-                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                                    <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
+                                <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-white">
+                                    <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} className={"w-[5] h-[8] ml-[1px] sm:w-[7] sm:h-[13] sm:ml-0"} />
                                 </div>
                             </Link>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </header>
+        </motion.header>
     );
 };
 

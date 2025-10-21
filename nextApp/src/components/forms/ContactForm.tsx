@@ -77,12 +77,12 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                     <X size={32} />
                 </button>) : ''
             }
-            <h2 className="mb-2 text-2xl font-bold md:text-4xl">{form.title}</h2>
+            <h2 className="mb-2 text-xl sm:text-2xl font-bold md:text-4xl">{form.title}</h2>
             {form.description ? (
-                <p className="mb-4 text-base text-[var(--gray-color)] md:mb-8 md:text-xl md:w-[90%]">{form.description}</p>
+                <p className="mb-4 text-xs sm:text-base text-[var(--gray-color)] md:mb-8 md:text-xl md:w-[90%]">{form.description}</p>
             ) : null}
 
-            <div className="grid w-full grid-cols-2 gap-2 rounded-2xl bg-[#F4F7FF] p-2 md:gap-3">
+            <div className="grid w-full grid-cols-2 gap-2 rounded-2xl bg-[#F4F7FF] px-2 py-1 sm:p-2 md:gap-3">
                 {CHANNELS.map((item) => {
                     const active = channel === item.value;
                     return (
@@ -90,7 +90,7 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                             key={item.value}
                             type="button"
                             onClick={() => setChannel(item.value)}
-                            className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-all md:text-base ${
+                            className={`flex items-center justify-center gap-2 rounded-xl sm:px-3 py-2 text-xs sm:text-sm font-semibold transition-all md:text-base ${
                                 active ? 'bg-white shadow-[0_12px_30px_rgba(10,46,111,0.15)] text-[var(--blue-primary)]' : 'text-[var(--color-gray)] hover:bg-white'
                             }`}
                             aria-pressed={active}
@@ -105,7 +105,7 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                 type="text"
                 placeholder="Ваше имя"
                 required
-                className="h-12 w-full rounded-xl border border-[var(--blue-primary)] px-4"
+                className="h-9 text-sm sm:text-base sm:h-12 w-full rounded-xl border border-[var(--blue-primary)] px-4 focus:outline-none"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
             />
@@ -113,29 +113,29 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                 type="text"
                 placeholder="Номер телефона"
                 required
-                className="h-12 w-full rounded-xl border border-[var(--blue-primary)] px-4"
+                className="h-9 text-sm sm:text-base w-full rounded-xl border border-[var(--blue-primary)] px-4 focus:outline-none"
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
             />
             <textarea
                 placeholder="Сообщение"
-                className="h-28 w-full resize-none rounded-xl border border-[var(--blue-primary)] px-4 py-3"
+                className="h-20q text-sm sm:text-base w-full resize-none rounded-xl border border-[var(--blue-primary)] px-4 py-3 focus:outline-none"
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
             />
 
             <button
                 type="submit"
-                className="gradientBtn mt-3 flex w-full items-center justify-center gap-3.5 py-2 pl-5.5 pr-3.5 md:w-max disabled:opacity-70"
+                className="gradientBtn py-1.5 text-sm sm:text-base mt-3 flex w-full items-center justify-center gap-2 sm:gap-3.5 sm:py-2 pl-5.5 pr-3.5 md:w-max disabled:opacity-70"
                 disabled={status === 'loading'}
             >
                 {status === 'loading' ? 'Отправляем…' : 'Отправить сейчас'}
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                    <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
+                <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-white">
+                    <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} className={"w-[5] h-[8] ml-[1px] sm:w-[7] sm:h-[13] sm:ml-0"} />
                 </div>
             </button>
 
-            <p className="text-xs text-[--gray-color] md:mt-4">
+            <p className="text-xs w-[80%] text-[--gray-color] md:mt-4">
                 Нажимая кнопку, вы соглашаетесь с{' '}
                 <Link href="/consent" className="text-[var(--blue-primary)]">
                     согласием на обработку данных
@@ -144,12 +144,12 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
             </p>
 
             {status === 'success' ? (
-                <p className="rounded-2xl bg-[#E9FFF2] px-4 py-2 text-sm font-semibold text-[#0E8D4D]">
+                <p className="rounded-2xl bg-[#E9FFF2] px-4 py-2 text-xs sm:text-sm font-semibold text-[#0E8D4D]">
                     Спасибо! Мы свяжемся с вами в ближайшее время.
                 </p>
             ) : null}
             {status === 'error' ? (
-                <p className="rounded-2xl bg-[#FFEAEA] px-4 py-2 text-sm font-semibold text-[#C23333]">
+                <p className="rounded-2xl bg-[#FFEAEA] px-4 py-2 text-xs sm:text-sm font-semibold text-[#C23333]">
                     Что-то пошло не так. Попробуйте ещё раз позже.
                 </p>
             ) : null}

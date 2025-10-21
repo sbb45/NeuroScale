@@ -103,7 +103,7 @@ const Header = () => {
                         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                         className="md:hidden origin-top overflow-hidden absolute left-0 right-0 top-full"
                     >
-                        <div className="mt-3 w-full px-5 py-6 text-white bg-black/90">
+                        <div className="w-full px-5 py-6 text-white bg-black/90">
                             <ul className="space-y-3 text-lg">
                                 {NAV_ITEMS.map((item) => (
                                     <li key={`mobile-${item.section}`}>

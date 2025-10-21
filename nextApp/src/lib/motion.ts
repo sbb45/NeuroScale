@@ -75,6 +75,5 @@ export const viewportOnce = (() => {
     }
 
     const isMobile = window.innerWidth < 768;
-    return { once: true, amount: isMobile ? 0.1 : 0.3 };
+    return { once: true, amount: isMobile ? 0.2 : 0.3 };
 })();
-

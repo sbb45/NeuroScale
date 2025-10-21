@@ -1,11 +1,13 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Case as CaseT } from '@/lib/cms';
 import { Title as TitleT } from '@/lib/cms';
 import { fadeInScale, fadeInUp, revealParent, viewportOnce } from '@/lib/motion';
 
 const Cases = ({ items, title }: { items: CaseT[]; title: TitleT }) => {
+    const [openId, setOpenId] = useState<string | null>(null);
+
     return (
         <motion.section
             id="projects"
@@ -22,11 +24,13 @@ const Cases = ({ items, title }: { items: CaseT[]; title: TitleT }) => {
                 <div className="grid grid-cols-1 gap-5 mt-6 sm:mt-10 md:gap-7 md:grid-cols-2">
                     {items.map((caseBlock) => {
                         const hasDetails = Boolean(caseBlock.solution || caseBlock.effect);
+                        const id = String(caseBlock.id ?? `${caseBlock.title}-${caseBlock.direction}`);
+
                         return (
                             <motion.article
-                                key={caseBlock.id ?? `${caseBlock.title}-${caseBlock.direction}`}
+                                key={id}
                                 tabIndex={0}
-                                className="group relative flex min-h-[340px] flex-col overflow-hidden rounded-4xl bg-[url(/backgrounds/cases-1.svg)] bg-cover bg-center px-5 py-7 text-white outline-none transition-transform duration-300 md:h-[420px] md:px-8 md:py-8 focus-visible:-translate-y-1 md:focus-visible:-translate-y-2"
+                                className="group relative flex min-h-[340px] flex-col overflow-hidden rounded-4xl bg-[url(/backgrounds/cases-1.svg)] bg-cover bg-center px-5 py-7 text-white outline-none transition-transform duration-300 md:h>[420px] md:px-8 md:py-8 focus-visible:-translate-y-1 md:focus-visible:-translate-y-2"
                                 variants={fadeInScale}
                                 whileHover={{ scale: 1.01 }}
                                 whileFocus={{ scale: 1.01 }}
@@ -42,27 +46,45 @@ const Cases = ({ items, title }: { items: CaseT[]; title: TitleT }) => {
                                             <p className="text-sm leading-5 text-white/85 line-clamp-3 md:text-base md:leading-6">{caseBlock.text}</p>
                                         </div>
                                     </div>
+
                                     {hasDetails ? (
                                         <>
-                                            <details className="mt-6 md:hidden">
-                                                <summary className="cursor-pointer select-none rounded-2xl bg-black/40 px-4 py-3 text-sm font-medium">
+                                            <div className="mt-6 md:hidden">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setOpenId(openId === id ? null : id)}
+                                                    aria-expanded={openId === id}
+                                                    className="w-full cursor-pointer select-none rounded-2xl bg-black/40 px-4 py-3 text-left text-sm font-medium"
+                                                >
                                                     Подробнее
-                                                </summary>
-                                                <div className="mt-3 space-y-3 rounded-2xl bg-black/35 px-4 py-3">
-                                                    {caseBlock.solution && (
-                                                <div>
-                                                    <span className="block text-xs uppercase tracking-wide text-white/70">Решение</span>
-                                                    <p className="mt-1 text-sm">{caseBlock.solution}</p>
-                                                </div>
-                                                )}
-                                                {caseBlock.effect && (
-                                                <div>
-                                                    <span className="block text-xs uppercase tracking-wide text-white/70">Эффект</span>
-                                                    <p className="mt-1 text-sm">{caseBlock.effect}</p>
-                                                </div>
-                                                )}
-                                                </div>
-                                            </details>
+                                                </button>
+                                                <motion.div
+                                                    initial={false}
+                                                    animate={
+                                                        openId === id
+                                                            ? { height: 'auto', opacity: 1 }
+                                                            : { height: 0, opacity: 0 }
+                                                    }
+                                                    transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="mt-3 space-y-3 rounded-2xl bg-black/35 px-4 py-3">
+                                                        {caseBlock.solution && (
+                                                            <div>
+                                                                <span className="block text-xs uppercase tracking-wide text-white/70">Решение</span>
+                                                                <p className="mt-1 text-sm">{caseBlock.solution}</p>
+                                                            </div>
+                                                        )}
+                                                        {caseBlock.effect && (
+                                                            <div>
+                                                                <span className="block text-xs uppercase tracking-wide text-white/70">Эффект</span>
+                                                                <p className="mt-1 text-sm">{caseBlock.effect}</p>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </motion.div>
+                                            </div>
+
                                             <div className="pointer-events-none absolute inset-0 hidden flex-col gap-6 p-0 opacity-0 transition-all duration-500 md:flex md:translate-y-6 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100">
                                                 <h3 className="text-2xl font-bold md:text-3xl">{caseBlock.title}</h3>
                                                 <div className="space-y-3 rounded-2xl bg-white/12 px-4 py-4 shadow-[0_18px_48px_rgba(12,24,64,0.35)] backdrop-blur">

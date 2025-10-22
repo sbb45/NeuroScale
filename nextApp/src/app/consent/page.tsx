@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import RichTextRenderer from '@/components/common/RichTextRenderer';
-import { getDocument } from '@/lib/cms';
+import {getDocument, getHome} from '@/lib/cms';
 import Header from "@/components/landing/Header";
+import {fallbacks} from "@/lib/fallback";
 
 const SLUG = 'consent';
 
@@ -163,13 +164,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ConsentPage() {
+    const dataHeader = await getHome();
     const doc = await getDocument(SLUG);
+
+    const contacts = dataHeader.contacts.length ? dataHeader.contacts : fallbacks.contacts;
     const data = doc ?? FALLBACK_CONSENT;
     const updatedAt = formatDate(doc?.updatedAt ?? FALLBACK_CONSENT.updatedAt);
 
     return (
         <>
-            <Header />
+            <Header contacts={contacts} />
             <main className="bg-[#0B1E3F] text-white">
                 <section className="container mx-auto px-4 py-16 md:py-24">
                     <div className="mx-auto max-w-4xl space-y-8">

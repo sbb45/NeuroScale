@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import {Contact as ContactT} from "@/lib/cms";
 
 type NavItem = {
     label: string;
@@ -17,10 +18,36 @@ const NAV_ITEMS: NavItem[] = [
     { label: 'Этапы', section: 'stages' },
     { label: 'Кейсы', section: 'projects' },
     { label: 'FAQ', section: 'faq' },
+    { label: 'Заявка', section: 'contacts' },
 ];
+interface IProps{
+    contacts: ContactT[];
+}
 
-const Header = () => {
-    // Меню
+function extractPhone(contacts: ContactT[]) {
+    let phone: string | null = null;
+
+    for (const contact of contacts) {
+        const name = contact.name?.toLowerCase().trim() || '';
+        const value = contact.value?.trim() || '';
+        if (!value) continue;
+
+        if (/(phone|тел)/.test(name)) {
+            phone = value.replace(/^tel:/i, '');
+            break;
+        }
+    }
+
+    const fallback = '+7 916 908 03 34';
+    const finalPhone = phone ?? fallback;
+    const digits = finalPhone.replace(/[^\d+]/g, '');
+    const href = digits.startsWith('+') ? `tel:${digits}` : `tel:+${digits}`;
+
+    return { href, display: finalPhone };
+}
+
+const Header = ({contacts}: IProps) => {
+    const { href, display } = extractPhone(contacts);
     const [menuOpen, setMenuOpen] = useState(false);
     const pathname = usePathname();
     const toggleMenu = () => {
@@ -61,7 +88,7 @@ const Header = () => {
                 <Link href="/" aria-label="NeuroScale — главная">
                     <Image src="/icons/logo.png" alt="logo" width={151} height={48} className={"w-[120px] sm:w-[151px]"} />
                 </Link>
-                <ul className="hidden gap-4 text-lg md:flex">
+                <ul className="hidden gap-6 text-lg md:flex">
                     {NAV_ITEMS.map((item) => (
                         <li key={item.section}>
                             <Link href={`/#${item.section}`} onClick={handleNavClick(item.section)}>
@@ -71,18 +98,17 @@ const Header = () => {
                     ))}
                 </ul>
                 <Link
-                    href="/#contacts"
-                    onClick={handleNavClick('contacts')}
-                    className="gradientBtn hidden items-center justify-center gap-3.5 py-2 pl-5.5 pr-3.5 font-bold md:flex"
+                    href={href}
+                    className="gradientBtn hidden items-center justify-center gap-3.5 py-2 pl-5.5 pr-3.5 font-bold lg:flex"
                 >
-                    Связаться
+                    {display}
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
                         <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
                     </div>
                 </Link>
                 <button
                     onClick={toggleMenu}
-                    className="relative h-7 w-7 text-white focus:outline-none md:hidden"
+                    className="relative h-7 w-7 text-white focus:outline-none lg:hidden"
                     aria-label="Toggle Menu"
                 >
                     <motion.span
@@ -106,7 +132,7 @@ const Header = () => {
                         animate="visible"
                         exit="exit"
                         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                        className="md:hidden origin-top overflow-hidden absolute left-0 right-0 top-full bg-[#010919]"
+                        className="lg:hidden origin-top overflow-hidden absolute left-0 right-0 top-full bg-[#010919]"
                     >
                         <div className="w-full px-5 py-6 text-white">
                             <ul className="space-y-3 text-base sm:text-lg">
@@ -119,11 +145,10 @@ const Header = () => {
                                 ))}
                             </ul>
                             <Link
-                                href="/#contacts"
-                                onClick={handleNavClick('contacts')}
+                                href={href}
                                 className="mt-4 flex items-center justify-center gap-3.5 rounded-3xl rounded-bl-none py-2 pl-5.5 pr-3.5 font-bold gradientBtn"
                             >
-                                Связаться
+                                {display}
                                 <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-white">
                                     <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} className={"w-[5] h-[8] ml-[1px] sm:w-[7] sm:h-[13] sm:ml-0"} />
                                 </div>

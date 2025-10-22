@@ -1,13 +1,18 @@
 'use client';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Contact as ContactT } from '@/lib/cms';
 import { fadeInLeft, fadeInUp, revealParent, viewportOnce } from '@/lib/motion';
+import {usePathname} from "next/navigation";
 
 const SOCIAL_KEYS = ['telegram', 'max', 'whatsapp'] as const;
 type SocialKey = (typeof SOCIAL_KEYS)[number];
+type NavItem = {
+    label: string;
+    section: string;
+};
 
 const SOCIAL_ICONS: Record<SocialKey, string> = {
     whatsapp: '/icons/link-wh.svg',
@@ -21,6 +26,15 @@ const SOCIAL_LABELS: Record<SocialKey, string> = {
     max: 'Max',
 };
 
+const NAV_ITEMS: NavItem[] = [
+    { label: 'О нас', section: 'about' },
+    { label: 'Возможности', section: 'possibilities' },
+    { label: 'Этапы', section: 'stages' },
+    { label: 'Кейсы', section: 'projects' },
+    { label: 'FAQ', section: 'faq' },
+    { label: 'Заявка', section: 'contacts' },
+];
+
 function normalizeInput(value: string) {
     return value.trim().toLowerCase();
 }
@@ -28,25 +42,20 @@ function normalizeInput(value: string) {
 function normalizeSocialHref(value: string, socialKey: SocialKey, fallbackHref: string) {
     const trimmed = value.trim();
     if (!trimmed) return fallbackHref;
-
     if (/^https?:\/\//i.test(trimmed)) return trimmed;
-
     if (socialKey === 'telegram') {
         if (trimmed.startsWith('@')) return `https://t.me/${trimmed.slice(1)}`;
         if (trimmed.startsWith('t.me/')) return `https://${trimmed}`;
     }
-
     if (socialKey === 'whatsapp') {
         const digits = trimmed.replace(/[^\d]/g, '');
         if (digits) return `https://wa.me/${digits}`;
         if (trimmed.startsWith('wa.me/')) return `https://${trimmed}`;
     }
-
     if (socialKey === 'max') {
         if (trimmed.startsWith('@')) return `https://max.me/${trimmed.slice(1)}`;
         if (trimmed.startsWith('max.me/')) return `https://${trimmed}`;
     }
-
     return `https://${trimmed.replace(/^https?:\/\//i, '')}`;
 }
 
@@ -64,7 +73,6 @@ function prepareContacts(contacts: ContactT[]) {
     contacts.forEach((contact) => {
         const name = normalizeInput(contact.name ?? '');
         const value = (contact.value ?? '').trim();
-
         if (!value) return;
 
         if (!phone && /(phone|тел)/.test(name)) {
@@ -110,6 +118,23 @@ type FooterProps = {
 
 const Footer = ({ contacts }: FooterProps) => {
     const contactData = prepareContacts(contacts);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const pathname = usePathname();
+
+    const handleNavClick = useCallback(
+        (section: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+            setMenuOpen(false);
+            if (pathname === '/') {
+                event.preventDefault();
+                const element = document.getElementById(section);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    window.history.replaceState(null, '', `/#${section}`);
+                }
+            }
+        },
+        [pathname],
+    );
 
     return (
         <motion.footer
@@ -140,20 +165,27 @@ const Footer = ({ contacts }: FooterProps) => {
                                         className="inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-white/10 transition-colors duration-200 hover:bg-white/20"
                                         aria-label={social.label}
                                     >
-                                        <Image src={SOCIAL_ICONS[social.key]} alt={social.label} width={40} height={40} className={"w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]"} />
+                                        <Image src={SOCIAL_ICONS[social.key]} alt={social.label} width={40} height={40} className="w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]" />
                                     </Link>
                                 </motion.span>
                             ))}
                         </motion.div>
                     </motion.div>
                     <motion.div variants={fadeInLeft} className="mb-4 md:flex items-start justify-start gap-20">
-                        <div className="hidden flex-col items-start gap-0.5 md:flex">
+                        <div className="hidden md:block">
                             <h3 className="mb-2 w-full text-xl font-bold">Навигация</h3>
-                            <Link href="/">О нас</Link>
-                            <Link href="/">Возможности</Link>
-                            <Link href="/">Этапы</Link>
-                            <Link href="/">Кейсы</Link>
-                            <Link href="/">FAQ</Link>
+                            <div className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2">
+                                {NAV_ITEMS.map((item) => (
+                                    <Link
+                                        key={item.section}
+                                        href={`/#${item.section}`}
+                                        onClick={handleNavClick(item.section)}
+                                        className="block"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                         <div className="flex flex-col items-start gap-0.5 md:justify-start">
                             <h3 className="mb-2 w-full text-center text-lg sm:text-xl font-bold md:text-start">Связаться с нами</h3>
@@ -184,25 +216,17 @@ const Footer = ({ contacts }: FooterProps) => {
                 </motion.div>
             </div>
             <motion.div
-                initial={{ opacity: 0, rotate: -24 }}
-                whileInView={{ opacity: 0.12, rotate: 12 }}
-                viewport={viewportOnce}
-                transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 z-11"
+                animate={{ scale: [1, 1.04, 1], rotate: [12, 18, 12] }}
+                transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute inset-0 "
             >
-                <motion.div
-                    animate={{ scale: [1, 1.04, 1], rotate: [12, 18, 12] }}
-                    transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute inset-0"
-                >
-                    <Image
-                        src="/icons/neuro.svg"
-                        alt="neuro"
-                        width={1600}
-                        height={900}
-                        className="absolute z-10 bottom-0 -left-48 h-full w-full rotate-90 opacity-10 md:-bottom-46 md:-left-144 md:rotate-28"
-                    />
-                </motion.div>
+                <Image
+                    src="/icons/neuro.svg"
+                    alt="neuro"
+                    width={1600}
+                    height={900}
+                    className="absolute z-10 h-full w-full bottom-0 -left-48 rotate-90 opacity-10 sm:-bottom-30 sm:-left-100 lg:-bottom-80 lg:-left-194 lg:rotate-28"
+                />
             </motion.div>
         </motion.footer>
     );

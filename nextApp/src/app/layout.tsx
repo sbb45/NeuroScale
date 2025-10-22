@@ -67,8 +67,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+    const ogTitle = typeof metadata.openGraph?.title === 'string' ? metadata.openGraph.title : 'NeuroScale';
+    const ogDescription =
+        typeof metadata.openGraph?.description === 'string'
+            ? metadata.openGraph.description
+            : metadata.description ?? '';
+
     return (
         <html lang="ru">
+            <head>
+                <meta property="og:url" content={metadataBase.href} />
+                <meta property="og:title" content={ogTitle} />
+                <meta property="og:description" content={ogDescription} />
+            </head>
             <body className={`${montserrat.variable} antialiased`}>
                 {children}
                 <CookieNotice />

@@ -20,12 +20,11 @@ model User {
 }
 
 model Client {
-  id            String    @id @default(cuid())
-  name          String    @default("")
-  phone         String    @default("")
-  contactMethod String?   @default("call")
-  question      String    @default("")
-  createdAt     DateTime? @default(now())
+  id        String    @id @default(cuid())
+  name      String    @default("")
+  phone     String    @default("")
+  question  String    @default("")
+  createdAt DateTime? @default(now())
 }
 
 model Title {

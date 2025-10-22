@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import RichTextRenderer from '@/components/common/RichTextRenderer';
-import { getDocument } from '@/lib/cms';
+import {getDocument, getHome} from '@/lib/cms';
 import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
+import {fallbacks} from "@/lib/fallback";
 
 const SLUG = 'privacy';
 
@@ -191,13 +192,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function PrivacyPolicyPage() {
+    const dataHeader = await getHome();
     const doc = await getDocument(SLUG);
+
+    const contacts = dataHeader.contacts.length ? dataHeader.contacts : fallbacks.contacts;
     const data = doc ?? FALLBACK_PRIVACY;
     const updatedAt = formatDate(doc?.updatedAt ?? FALLBACK_PRIVACY.updatedAt);
 
     return (
         <>
-        <Header />
+        <Header contacts={contacts} />
         <main className="bg-[#0B1E3F] text-white">
             <section className="container mx-auto px-4 py-20 md:py-24">
                 <div className="mx-auto max-w-4xl space-y-8">

@@ -21,7 +21,7 @@ export default function Possibilities({items, title}: {items: PossibilitieT[], t
     const merged = items.map((item, index) => ({
         ...item,
         img: imgs[index],
-    }));;
+    }));
 
     useEffect(() => {
         const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(null);
@@ -43,7 +43,7 @@ export default function Possibilities({items, title}: {items: PossibilitieT[], t
                 viewport={viewportOnce}
                 className="bg-[#EAFCFE] py-14 rounded-4xl rounded-t-none lg:rounded-[80px] lg:rounded-t-none md:py-20 relative z-12"
             >
-                <div className="container mx-auto text-center">
+                <div className="container mx-auto text-center relative z-14">
                     <motion.p custom={0} variants={fadeInUp} className="sectionSubtitle">
                         {title.details}
                     </motion.p>

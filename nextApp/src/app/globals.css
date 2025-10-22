@@ -17,13 +17,7 @@
     --font-montserrat: var(--font-montserrat);
     --gradient-blue: linear-gradient(to right, var(--blue-dark) 24%, var(--blue-primary) 100%);
 
-    /*Контейнеры*/
-    --container-xs: 480px;
-    --container-sm: 640px;
-    --container-md: 768px;
-    --container-lg: 1024px;
-    --container-xl: 1280px;
-    --container-2xl: 1440px;
+    --breakpoint-xs380: 380px;
 }
 
 html {
@@ -57,10 +51,10 @@ body {
 }
 
 .sectionSubtitle{
-    @apply text-base text-[var(--color-blue-bright)] font-bold md:text-xl lg:text-2xl;
+    @apply text-base xs380:text-xl text-[var(--color-blue-bright)] font-bold lg:text-2xl;
 }
 .sectionTitle{
-    @apply text-2xl/6 text-black font-bold mt-2 mb-3 md:text-3xl/9 lg:text-4xl/11 xl:text-5xl/13;
+    @apply text-xl/5 text-black font-bold mt-2 mb-3 md:text-3xl/9 lg:text-4xl/11 xl:text-5xl/13;
 }
 .sectionDescription{
     @apply text-xs text-[var(--color-gray)] font-medium md:text-base lg:text-lg;

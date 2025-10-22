@@ -22,14 +22,12 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [question, setQuestion] = useState('');
-    const [channel, setChannel] = useState<typeof CHANNELS[number]['value']>('call');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const resetForm = () => {
         setName('');
         setPhone('');
         setQuestion('');
-        setChannel('call');
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -45,7 +43,6 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                     name,
                     phone,
                     question,
-                    contactMethod: channel,
                 }),
             });
             if (!response.ok) {
@@ -82,30 +79,11 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                 <p className="mb-4 text-xs sm:text-base text-[var(--gray-color)] md:mb-8 md:text-xl md:w-[90%]">{form.description}</p>
             ) : null}
 
-            <div className="grid w-full grid-cols-2 gap-2 rounded-2xl bg-[#F4F7FF] px-2 py-1 sm:p-2 md:gap-3">
-                {CHANNELS.map((item) => {
-                    const active = channel === item.value;
-                    return (
-                        <button
-                            key={item.value}
-                            type="button"
-                            onClick={() => setChannel(item.value)}
-                            className={`flex items-center justify-center gap-2 rounded-xl sm:px-3 py-2 text-xs sm:text-sm font-semibold transition-all md:text-base ${
-                                active ? 'bg-white shadow-[0_12px_30px_rgba(10,46,111,0.15)] text-[var(--blue-primary)]' : 'text-[var(--color-gray)] hover:bg-white'
-                            }`}
-                            aria-pressed={active}
-                        >
-                            {item.label}
-                        </button>
-                    );
-                })}
-            </div>
-
             <input
                 type="text"
                 placeholder="Ваше имя"
                 required
-                className="h-9 text-sm sm:text-base sm:h-12 w-full rounded-xl border border-[var(--blue-primary)] px-4 focus:outline-none"
+                className="h-10 text-sm sm:text-base sm:h-12 w-full rounded-xl border border-[var(--blue-primary)] px-4 focus:outline-none"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
             />
@@ -113,20 +91,20 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                 type="text"
                 placeholder="Номер телефона"
                 required
-                className="h-9 text-sm sm:text-base w-full rounded-xl border border-[var(--blue-primary)] px-4 focus:outline-none"
+                className="h-10 text-sm sm:text-base sm:h-12 w-full rounded-xl border border-[var(--blue-primary)] px-4 focus:outline-none"
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
             />
             <textarea
                 placeholder="Сообщение"
-                className="h-20q text-sm sm:text-base w-full resize-none rounded-xl border border-[var(--blue-primary)] px-4 py-3 focus:outline-none"
+                className="h-20 text-sm sm:text-base w-full resize-none rounded-xl border border-[var(--blue-primary)] px-4 py-3 focus:outline-none"
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
             />
 
             <button
                 type="submit"
-                className="gradientBtn py-1.5 text-sm sm:text-base mt-3 flex w-full items-center justify-center gap-2 sm:gap-3.5 sm:py-2 pl-5.5 pr-3.5 md:w-max disabled:opacity-70"
+                className="gradientBtn py-2 text-sm sm:text-base mt-3 flex w-full items-center justify-center gap-2 sm:gap-3.5 pl-5.5 pr-3.5 md:w-max disabled:opacity-70"
                 disabled={status === 'loading'}
             >
                 {status === 'loading' ? 'Отправляем…' : 'Отправить сейчас'}
@@ -135,13 +113,48 @@ export default function ContactForm({ form, className, onSubmitted }: ContactFor
                 </div>
             </button>
 
-            <p className="text-xs w-[80%] text-[--gray-color] md:mt-4">
-                Нажимая кнопку, вы соглашаетесь с{' '}
-                <Link href="/consent" className="text-[var(--blue-primary)]">
-                    согласием на обработку данных
-                </Link>
-                .
-            </p>
+            <div className="flex flex-col items-start space-y-2 mt-3 text-left text-xs sm:text-sm text-[--gray-color]">
+                <label className="flex items-start gap-2">
+                    <input
+                        type="checkbox"
+                        required
+                        className="mt-0.5 min-h-4 min-w-4 accent-[var(--blue-primary)]"
+                    />
+                    <span>
+                      Я ознакомлен с{' '}
+                        <Link href="/privacy" className="text-[var(--blue-primary)]">
+                        Политикой Конфиденциальности
+                      </Link>
+                    </span>
+                </label>
+
+                <label className="flex items-start gap-2">
+                    <input
+                        type="checkbox"
+                        required
+                        className="mt-0.5 min-h-4 min-w-4 accent-[var(--blue-primary)]"
+                    />
+                    <span>
+                        Я подтверждаю свое{' '}
+                        <Link href="/consent" className="text-[var(--blue-primary)]">согласие на обработку моих персональных данных</Link>, указанных в данной форме
+                    </span>
+                </label>
+
+                <label className="flex items-start gap-2">
+                    <input
+                        type="checkbox"
+                        required
+                        className="mt-0.5 min-h-4 min-w-4 accent-[var(--blue-primary)]"
+                    />
+                    <span>
+                      Я уведомлён(а), что могу отозвать согласие путём направления запроса по адресу электронной почты:{' '}
+                        <Link href="mailto:info@neuroscale-company.ru" className="text-[var(--blue-primary)]">
+                        info@neuroscale-company.ru
+                      </Link>
+                    </span>
+                </label>
+            </div>
+
 
             {status === 'success' ? (
                 <p className="rounded-2xl bg-[#E9FFF2] px-4 py-2 text-xs sm:text-sm font-semibold text-[#0E8D4D]">

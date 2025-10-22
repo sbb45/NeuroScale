@@ -92,7 +92,7 @@ export default async function Home() {
 
     return (
         <>
-            <Header />
+            <Header contacts={contacts} />
             <main>
                 <ScrollToHash />
                 <Hero title={heroTitle} form={formTitle} />

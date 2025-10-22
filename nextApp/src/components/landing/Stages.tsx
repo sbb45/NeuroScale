@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Stage as StageT } from '@/lib/cms';
 import { Title as TitleT } from '@/lib/cms';
-import { fadeInUp, revealParent, viewportOnce } from '@/lib/motion';
+import {fadeInScale, fadeInUp, revealParent, viewportOnce} from '@/lib/motion';
 
 const imgs = [
     'stages-2.svg',
@@ -41,7 +41,7 @@ const Stages = ({ items, title }: StagesProps) => {
             viewport={viewportOnce}
             className="bg-[linear-gradient(-12deg,#000000_3%,#002877_48%,#000000_100%)] relative z-10 -mt-10 overflow-hidden lg:-mt-16"
         >
-            <div className="container relative z-10 mx-auto px-4 py-24 md:py-40">
+            <div className="container relative z-10 mx-auto px-2 py-24 md:py-40">
                 <motion.h2 variants={fadeInUp} className="sectionTitle text-center !text-white">
                     {title.title}
                 </motion.h2>
@@ -73,11 +73,13 @@ const Stages = ({ items, title }: StagesProps) => {
                                         role="button"
                                         tabIndex={0}
                                         aria-expanded={isOpen}
+                                        variants={fadeInScale}
+                                        custom={index}
                                         onClick={() => toggleStage(index)}
                                         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleStage(index)}
                                         layout
                                         transition={{ layout: { duration: 0.36, ease: [0.22, 1, 0.36, 1] } }}
-                                        className="relative flex max-w-[600px] cursor-pointer items-start gap-3 rounded-[28px] bg-white/95 px-4 py-7 text-left shadow-[0_24px_60px_rgba(7,24,79,0.28)] backdrop-blur-sm transition-[box-shadow,transform] duration-300 hover:shadow-[0_30px_70px_rgba(10,46,111,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 md:gap-3 md:px-8 md:py-9 lg:items-center"
+                                        className="relative flex max-w-[600px] cursor-pointer items-start gap-2 rounded-[28px] bg-white/95 px-3 py-6 text-left shadow-[0_24px_60px_rgba(7,24,79,0.28)] backdrop-blur-sm transition-[box-shadow,transform] duration-300 hover:shadow-[0_30px_70px_rgba(10,46,111,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 xl:gap-3 xl:px-8 xl:py-9 lg:items-center"
                                     >
                                             <span className="lg:hidden absolute -top-6 left-6 flex h-11 w-11 items-center justify-center rounded-full bg-white text-xl font-bold text-[var(--blue-primary)] shadow-[0_12px_30px_rgba(10,46,111,0.35)]">
                                                 {index + 1}
@@ -87,7 +89,7 @@ const Stages = ({ items, title }: StagesProps) => {
                                             alt=""
                                             width={133}
                                             height={133}
-                                            className="h-20 w-20 p-3 md:h-32 md:w-32"
+                                            className="h-14 w-14 md:w-22 md:h-22 xl:p-3 xl:h-32 xl:w-32"
                                         />
                                         <div className="flex-1">
                                             <h3 className="text-xl/5 font-bold md:text-2xl">{stage.title}</h3>

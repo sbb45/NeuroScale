@@ -95,7 +95,6 @@ const Information = ({ items, faqs, form }: InformationProps) => {
                 <motion.div
                     variants={fadeInLeft}
                     className="relative mx-auto lg:ml-auto mt-12 max-w-[540px]"
-                    id="contacts"
                 >
                     <ContactForm form={form} />
                     <motion.span

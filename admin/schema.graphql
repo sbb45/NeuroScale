@@ -115,7 +115,6 @@ type Client {
   id: ID!
   name: String
   phone: String
-  contactMethod: String
   question: String
   createdAt: DateTime
 }
@@ -131,30 +130,14 @@ input ClientWhereInput {
   id: IDFilter
   name: StringFilter
   phone: StringFilter
-  contactMethod: StringNullableFilter
   question: StringFilter
   createdAt: DateTimeNullableFilter
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: StringNullableFilter
 }
 
 input ClientOrderByInput {
   id: OrderDirection
   name: OrderDirection
   phone: OrderDirection
-  contactMethod: OrderDirection
   question: OrderDirection
   createdAt: OrderDirection
 }
@@ -162,7 +145,6 @@ input ClientOrderByInput {
 input ClientUpdateInput {
   name: String
   phone: String
-  contactMethod: String
   question: String
   createdAt: DateTime
 }
@@ -175,7 +157,6 @@ input ClientUpdateArgs {
 input ClientCreateInput {
   name: String
   phone: String
-  contactMethod: String
   question: String
   createdAt: DateTime
 }

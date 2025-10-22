@@ -74,7 +74,7 @@ export const lists: Lists = {
             path: 'client',
             labelField: 'name',
             listView: {
-                initialColumns: ['name', 'phone', 'contactMethod', 'question', 'createdAt'],
+                initialColumns: ['name', 'phone', 'question', 'createdAt'],
                 initialSort: { field: 'createdAt', direction: 'DESC' },
             },
             description: 'Клиенты сайта',
@@ -82,16 +82,6 @@ export const lists: Lists = {
         fields: {
             name: text({ validation: { isRequired: true }, label: 'Имя' }),
             phone: text({ validation: { isRequired: true }, label: 'Телефон' }),
-            contactMethod: select({
-                label: 'Предпочтительный канал',
-                options: [
-                    { label: 'Позвонить', value: 'call' },
-                    { label: 'Telegram', value: 'telegram' },
-                    { label: 'Max', value: 'max' },
-                    { label: 'WhatsApp', value: 'whatsapp' },
-                ],
-                defaultValue: 'call',
-            }),
             question: text({ label: 'Вопрос' }),
             createdAt: timestamp({ defaultValue: { kind: 'now' }, label: 'Создано' }),
         },
@@ -164,7 +154,7 @@ export const lists: Lists = {
             },
         },
         fields: {
-            slug: text({ validation: { isRequired: true }, isIndexed: 'unique', label: 'Системное имя' }),
+            slug: text({ validation: { isRequired: true }, isIndexed: 'unique', label: 'Системное имя (Не менять)' }),
             title: text({ validation: { isRequired: true }, label: 'Заголовок' }),
             description: text({ label: 'Описание' }),
             content: document({

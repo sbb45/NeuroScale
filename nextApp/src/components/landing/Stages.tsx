@@ -99,7 +99,6 @@ const Stages = ({ items, title }: StagesProps) => {
                                             <button
                                                 type="button"
                                                 className="text-xs sm:text-sm text-[var(--blue-primary)] font-semibold cursor-pointer"
-                                                onClick={() => setOpen(i)}
                                             >
                                                 Подробнее
                                             </button>

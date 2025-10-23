@@ -3,8 +3,8 @@ import Link from 'next/link';
 import RichTextRenderer from '@/components/common/RichTextRenderer';
 import {getDocument, getHome} from '@/lib/cms';
 import Header from "@/components/landing/Header";
-import Footer from "@/components/landing/Footer";
 import {fallbacks} from "@/lib/fallback";
+import {ArrowLeft} from "lucide-react";
 
 const SLUG = 'privacy';
 
@@ -206,6 +206,12 @@ export default async function PrivacyPolicyPage() {
             <section className="container mx-auto px-4 py-20 md:py-24">
                 <div className="mx-auto max-w-4xl space-y-8">
                     <header className="mt-10 space-y-2 sm:space-y-4">
+                        <Link href="/" passHref>
+                            <button className="flex items-center gap-2 mb-4">
+                                <ArrowLeft className="w-4 h-4" />
+                                Назад
+                            </button>
+                        </Link>
                         <p className="text-[12px] sm:text-sm uppercase tracking-[0.25em] text-white/70">Документы</p>
                         <h1 className="text-xl sm:text-3xl font-semibold md:text-5xl">{data.title}</h1>
                         {data.description ? <p className="text-white/70 text-sm md:text-lg">{data.description}</p> : null}

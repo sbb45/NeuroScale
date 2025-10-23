@@ -1,3 +1,5 @@
+import ScrollTop from "@/components/common/ScrollTop";
+
 export const dynamic = 'force-static';
 export const revalidate = 600;
 export const runtime = 'nodejs';
@@ -105,7 +107,7 @@ export default async function Home() {
                     form={formTitle}
                     items={faqs}
                 />
-
+                <ScrollTop />
             </main>
             <Footer contacts={contacts} />
         </>

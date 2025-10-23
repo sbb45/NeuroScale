@@ -69,13 +69,15 @@ const Header = ({contacts}: IProps) => {
                 event.preventDefault();
                 const element = document.getElementById(section);
                 if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const top = element.getBoundingClientRect().top + window.scrollY - 100;
+                    window.scrollTo({ top, behavior: 'smooth' });
                     window.history.replaceState(null, '', `/#${section}`);
                 }
             }
         },
         [pathname],
     );
+
 
     return (
         <motion.header

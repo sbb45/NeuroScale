@@ -105,6 +105,7 @@ export default async function Home() {
                     form={formTitle}
                     items={faqs}
                 />
+
             </main>
             <Footer contacts={contacts} />
         </>

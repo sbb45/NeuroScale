@@ -18,14 +18,13 @@ const Information = ({ items, faqs, form }: InformationProps) => {
 
     return (
         <motion.section
-            id="faq"
             initial="hidden"
             whileInView="show"
             variants={revealParent}
             viewport={viewportOnce}
             className="bg-white pt-10 pb-32 md:pt-16 md:pb-46"
         >
-            <div className="container mx-auto grid grid-cols-1 px-4 lg:grid-cols-2 items-start lg:gap-28">
+            <div className="container mx-auto grid grid-cols-1 px-4 lg:grid-cols-2 items-start lg:mt-12 lg:gap-28" id="faq">
                 <motion.div variants={fadeInUp} className="flex flex-col items-center justify-center md:justify-start md:items-start">
                     <motion.p custom={0} variants={fadeInUp} className="sectionSubtitle -mb-2 md:mb-2 md:text-start">
                         {faqs.details}
@@ -94,7 +93,7 @@ const Information = ({ items, faqs, form }: InformationProps) => {
                 </motion.div>
                 <motion.div
                     variants={fadeInLeft}
-                    className="relative mx-auto lg:ml-auto mt-12 max-w-[540px]"
+                    className="relative mx-auto lg:ml-auto mt-12 lg:mt-8 max-w-[540px]"
                 >
                     <ContactForm form={form} />
                     <motion.span
@@ -107,6 +106,7 @@ const Information = ({ items, faqs, form }: InformationProps) => {
                         initial={{ opacity: 0, rotate: -12 }}
                         animate={{ opacity: 1, rotate: 0 }}
                         transition={{ duration: 0.7, ease: [0.32, 0.08, 0.24, 1], delay: 0.15 }}
+                        id="contacts"
                         className="absolute -top-4 -right-4 md:-top-8 md:-right-8 z-0 hidden h-40 w-40 md:h-64 md:w-64 !rounded-4xl gradientBlock md:block"
                     />
                 </motion.div>

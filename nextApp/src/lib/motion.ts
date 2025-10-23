@@ -1,6 +1,5 @@
 import type { Transition, Variants } from 'framer-motion';
 
-// Shared motion configs to keep reveal animations consistent across the landing page.
 export const defaultTransition: Transition = {
     duration: 0.65,
     ease: [0.22, 1, 0.36, 1],
@@ -71,9 +70,9 @@ export const fadeInLeft: Variants = {
 
 export const viewportOnce = (() => {
     if (typeof window === 'undefined') {
-        return { once: true, amount: 0.4 }; // для SSR
+        return { once: true, amount: 0.2 };
     }
 
     const isMobile = window.innerWidth < 768;
-    return { once: true, amount: isMobile ? 0.2 : 0.3 };
+    return { once: true, amount: isMobile ? 0.1 : 0.2 };
 })();

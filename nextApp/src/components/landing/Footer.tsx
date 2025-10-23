@@ -174,7 +174,7 @@ const Footer = ({ contacts }: FooterProps) => {
                     <motion.div variants={fadeInLeft} className="mb-4 md:flex items-start justify-start gap-20">
                         <div className="hidden md:block">
                             <h3 className="mb-2 w-full text-xl font-bold">Навигация</h3>
-                            <div className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2">
+                            <div className="grid grid-cols-[max-content_1fr_1fr] gap-y-2 gap-x-5">
                                 {NAV_ITEMS.map((item) => (
                                     <Link
                                         key={item.section}

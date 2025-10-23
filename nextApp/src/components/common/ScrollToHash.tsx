@@ -16,7 +16,8 @@ export default function ScrollToHash() {
         if (!element) return;
 
         const timeout = window.setTimeout(() => {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const top = element.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top, behavior: 'smooth' });
         }, 60);
 
         return () => window.clearTimeout(timeout);

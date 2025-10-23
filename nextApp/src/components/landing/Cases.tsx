@@ -89,7 +89,7 @@ const Cases = ({ items, title }: { items: CaseT[]; title: TitleT }) => {
                                                         aria-expanded={isOpen}
                                                         className="w-full cursor-pointer select-none rounded-2xl bg-black/40 px-4 py-3 text-left text-sm font-medium"
                                                     >
-                                                        Подробнее
+                                                        Решение
                                                     </button>
                                                 </div>
                                             ) : null}

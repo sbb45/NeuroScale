@@ -96,6 +96,13 @@ const Stages = ({ items, title }: StagesProps) => {
                                             <p className="mt-3 text-sm leading-5 text-[var(--color-gray)] md:text-base md:leading-6">
                                                 {stage.text}
                                             </p>
+                                            <button
+                                                type="button"
+                                                className="text-xs sm:text-sm text-[var(--blue-primary)] font-semibold cursor-pointer"
+                                                onClick={() => setOpen(i)}
+                                            >
+                                                Подробнее
+                                            </button>
                                         </div>
                                     </motion.article>
 

@@ -14,11 +14,11 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
     { label: 'О нас', section: 'about' },
-    { label: 'Возможности', section: 'possibilities' },
+    { label: 'Услуги', section: 'possibilities' },
     { label: 'Этапы', section: 'stages' },
     { label: 'Кейсы', section: 'projects' },
     { label: 'FAQ', section: 'faq' },
-    { label: 'Заявка', section: 'contacts' },
+    { label: 'Контакты', section: 'contacts' },
 ];
 interface IProps{
     contacts: ContactT[];
@@ -105,7 +105,7 @@ const Header = ({contacts}: IProps) => {
                 >
                     {display}
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                        <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} />
+                        <Image src="/icons/phone-blue.svg" alt="phone" width={28} height={28} />
                     </div>
                 </Link>
                 <button
@@ -152,7 +152,7 @@ const Header = ({contacts}: IProps) => {
                             >
                                 {display}
                                 <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-white">
-                                    <Image src="/icons/arrow.svg" alt="arrow" width={7} height={13} className={"w-[5] h-[8] ml-[1px] sm:w-[7] sm:h-[13] sm:ml-0"} />
+                                    <Image src="/icons/phone-blue.svg" alt="phone" width={20} height={20} className={""} />
                                 </div>
                             </Link>
                         </div>

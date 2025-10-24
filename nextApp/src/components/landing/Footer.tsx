@@ -28,11 +28,11 @@ const SOCIAL_LABELS: Record<SocialKey, string> = {
 
 const NAV_ITEMS: NavItem[] = [
     { label: 'О нас', section: 'about' },
-    { label: 'Возможности', section: 'possibilities' },
+    { label: 'Услуги', section: 'possibilities' },
     { label: 'Этапы', section: 'stages' },
     { label: 'Кейсы', section: 'projects' },
     { label: 'FAQ', section: 'faq' },
-    { label: 'Заявка', section: 'contacts' },
+    { label: 'Контакты', section: 'contacts' },
 ];
 
 function normalizeInput(value: string) {
@@ -145,8 +145,8 @@ const Footer = ({ contacts }: FooterProps) => {
             className="pt-14 bg-[linear-gradient(110deg,#000000_3%,#002877_45%)] relative z-12 rounded-4xl rounded-b-none overflow-hidden -mt-10 lg:-mt-16 lg:lg:rounded-[80px] lg:rounded-b-none"
         >
             <div className="container mx-auto px-4 text-white relative z-14">
-                <div className="flex flex-col items-center justify-center md:flex-row md:justify-between">
-                    <motion.div variants={fadeInUp} className="mb-10 flex items-end justify-between gap-5 md:flex-col">
+                <div className="flex flex-col items-center justify-center md:items-start md:flex-row md:justify-between">
+                    <motion.div variants={fadeInUp} className="mb-10 flex items-end justify-between gap-5 md:mb-0 md:flex-col">
                         <motion.div variants={fadeInUp}>
                             <Image src="/icons/logo.png" alt="logo" width={198} height={64} className="w-30 sm:w-40" />
                         </motion.div>
@@ -171,10 +171,10 @@ const Footer = ({ contacts }: FooterProps) => {
                             ))}
                         </motion.div>
                     </motion.div>
-                    <motion.div variants={fadeInLeft} className="mb-4 md:flex items-start justify-start gap-8">
+                    <motion.div variants={fadeInLeft} className="mb-4 md:flex items-start justify-start gap-8 md:mb-0">
                         <div className="hidden md:block">
                             <h3 className="mb-2 w-full text-xl font-bold">Навигация</h3>
-                            <div className="grid grid-cols-[max-content_1fr_1fr] gap-y-2 gap-x-8">
+                            <div className="grid grid-cols-[max-content_1fr] lg:grid-cols-[max-content_1fr_1fr] gap-y-2 gap-x-8">
                                 {NAV_ITEMS.map((item) => (
                                     <Link
                                         key={item.section}
@@ -206,7 +206,7 @@ const Footer = ({ contacts }: FooterProps) => {
                         </div>
                     </motion.div>
                 </div>
-                <motion.hr variants={fadeInUp} className="mt-12 h-[1px] w-full border-0 bg-white md:mt-18" />
+                <motion.hr variants={fadeInUp} className="mt-12 h-[1px] w-full border-0 bg-white md:mt-30" />
                 <motion.div variants={fadeInUp} className="mt-12 pb-8">
                     <div className="flex flex-col items-center justify-center text-sm sm:text-base gap-1 md:flex-row md:gap-8">
                         <Link href="/privacy">Политика конфиденциальности</Link>
@@ -218,14 +218,15 @@ const Footer = ({ contacts }: FooterProps) => {
             <motion.div
                 animate={{ scale: [1, 1.04, 1], rotate: [12, 18, 12] }}
                 transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute inset-0 "
+                className="absolute inset-0 w-screen right-0"
+                id="contacts"
             >
                 <Image
                     src="/icons/neuro.svg"
                     alt="neuro"
                     width={1600}
                     height={900}
-                    className="absolute z-10 h-full w-full bottom-0 -left-48 rotate-90 opacity-10 sm:-bottom-30 sm:-left-100 lg:-bottom-80 lg:-left-194 lg:rotate-28"
+                    className="absolute z-10 h-full w-full bottom-0 -right-48 rotate-90 opacity-10 sm:-bottom-30 sm:-right-100 lg:-bottom-0 lg:-right-150 lg:-rotate-80"
                 />
             </motion.div>
         </motion.footer>

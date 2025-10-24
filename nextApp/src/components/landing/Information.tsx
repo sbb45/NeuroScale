@@ -106,7 +106,6 @@ const Information = ({ items, faqs, form }: InformationProps) => {
                         initial={{ opacity: 0, rotate: -12 }}
                         animate={{ opacity: 1, rotate: 0 }}
                         transition={{ duration: 0.7, ease: [0.32, 0.08, 0.24, 1], delay: 0.15 }}
-                        id="contacts"
                         className="absolute -top-4 -right-4 md:-top-8 md:-right-8 z-0 hidden h-40 w-40 md:h-64 md:w-64 !rounded-4xl gradientBlock md:block"
                     />
                 </motion.div>

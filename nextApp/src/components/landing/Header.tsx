@@ -105,7 +105,7 @@ const Header = ({contacts}: IProps) => {
                 >
                     {display}
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                        <Image src="/icons/phone-blue.svg" alt="phone" width={28} height={28} />
+                        <Image src="/icons/phone-blue.svg" alt="phone" width={24} height={24} />
                     </div>
                 </Link>
                 <button
@@ -152,7 +152,7 @@ const Header = ({contacts}: IProps) => {
                             >
                                 {display}
                                 <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-white">
-                                    <Image src="/icons/phone-blue.svg" alt="phone" width={20} height={20} className={""} />
+                                    <Image src="/icons/phone-blue.svg" alt="phone" width={18} height={18} className={""} />
                                 </div>
                             </Link>
                         </div>

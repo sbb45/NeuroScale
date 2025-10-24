@@ -146,11 +146,11 @@ const Footer = ({ contacts }: FooterProps) => {
         >
             <div className="container mx-auto px-4 text-white relative z-14">
                 <div className="flex flex-col items-center justify-center md:items-start md:flex-row md:justify-between">
-                    <motion.div variants={fadeInUp} className="mb-10 flex items-end justify-between gap-5 md:mb-0 md:flex-col">
+                    <motion.div variants={fadeInUp} className="mb-10 flex items-end justify-between gap-5 md:items-start md:mb-0 md:flex-col">
                         <motion.div variants={fadeInUp}>
-                            <Image src="/icons/logo.png" alt="logo" width={198} height={64} className="w-30 sm:w-40" />
+                            <Image src="/icons/logo.png" alt="logo" width={198} height={64} className="w-30  sm:w-40" />
                         </motion.div>
-                        <motion.div variants={fadeInUp} className="mt-6 flex items-center justify-center gap-4">
+                        <motion.div variants={fadeInUp} className="mt-0 flex items-center justify-between gap-3 md:gap-0 md:w-full">
                             {contactData.socials.map((social, index) => (
                                 <motion.span
                                     key={social.key}
@@ -171,10 +171,10 @@ const Footer = ({ contacts }: FooterProps) => {
                             ))}
                         </motion.div>
                     </motion.div>
-                    <motion.div variants={fadeInLeft} className="mb-4 md:flex items-start justify-start gap-8 md:mb-0">
+                    <motion.div variants={fadeInLeft} className="mb-4 md:flex items-start justify-start gap-8 md:mt-3 md:mb-0">
                         <div className="hidden md:block">
-                            <h3 className="mb-2 w-full text-xl font-bold">Навигация</h3>
-                            <div className="grid grid-cols-[max-content_1fr] lg:grid-cols-[max-content_max-content_1fr] gap-y-4.5 gap-x-8">
+                            <h3 className="mb-[21px] w-full text-xl font-bold">Навигация</h3>
+                            <div className="grid grid-cols-[max-content_1fr] lg:grid-cols-[max-content_max-content_1fr] gap-y-2 gap-x-6">
                                 {NAV_ITEMS.map((item) => (
                                     <Link
                                         key={item.section}
@@ -188,7 +188,7 @@ const Footer = ({ contacts }: FooterProps) => {
                             </div>
                         </div>
                         <div className="flex flex-col items-start gap-0.5 md:justify-start">
-                            <h3 className="mb-2 w-full text-center text-lg sm:text-xl font-bold md:text-start">Связаться с нами</h3>
+                            <h3 className="mb-2 w-full text-center text-lg sm:text-xl font-bold md:mb-[15px] md:text-start">Связаться с нами</h3>
                             <Link
                                 href={buildPhoneHref(contactData.phone)}
                                 className="mb-1 flex items-center justify-center gap-2 text-sm sm:text-base md:justify-start"
@@ -198,7 +198,7 @@ const Footer = ({ contacts }: FooterProps) => {
                             </Link>
                             <Link
                                 href={`mailto:${contactData.email}`}
-                                className="flex items-center justify-center gap-2 text-sm sm:text-base md:justify-start"
+                                className="flex items-center justify-center gap-2 text-sm sm:text-base md:-mt-[5px] md:justify-start"
                             >
                                 <Image src="/icons/mail.svg" alt="email" width={40} height={40} className="h-6 w-6 sm:h-8 sm:w-8" />
                                 {contactData.email}

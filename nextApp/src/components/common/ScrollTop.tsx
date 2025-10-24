@@ -43,7 +43,7 @@ const ScrollTop = ({ threshold = 200 }) => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.8, y: 20 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    className="fixed z-50 bottom-4 right-4 md:bottom-6 md:right-6 rounded-full p-3 md:p-4 shadow-lg shadow-black/20 bg-white/90 dark:bg-neutral-900/90 backdrop-blur ring-1 ring-black/10 hover:ring-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-95 select-none"
+                    className="fixed z-50 bottom-4 right-4 md:bottom-6 md:right-6 rounded-full p-3 md:p-4 shadow-lg shadow-black/20 bg-white/90 backdrop-blur ring-1 ring-black/10 hover:ring-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-95 select-none"
                 >
                     <ArrowUp className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
                     <span className="sr-only">Наверх</span>

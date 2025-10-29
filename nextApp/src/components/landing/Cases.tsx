@@ -31,13 +31,13 @@ const Cases = ({ items, title }: { items: CaseT[]; title: TitleT }) => {
             viewport={viewportOnce}
             className="bg-white relative z-[12] rounded-4xl rounded-b-none -mt-10 lg:-mt-16 lg:rounded-[80px] lg:rounded-b-none"
         >
-            <div className="lg:container mx-auto overflow-auto lg:overflow-hidden pt-18">
+            <div className="lg:container mx-auto overflow-x-auto lg:overflow-visible pt-18">
                 <motion.h2 variants={fadeInUp} className="sectionTitle text-center">
                     {title.title}
                 </motion.h2>
 
                 <div className="relative mt-6 sm:mt-10 translate-x-1 lg:translate-x-0">
-                    <div className="relative flex gap-1 overflow-x-auto lg:overflow-x-hidden pb-12 px-1 pt-2 snap-x snap-mandatory sm:gap-5 md:gap-6 lg:grid lg:grid-cols-2 lg:gap-7 lg:overflow-visible lg:px-0 lg:py-0 lg:snap-none">
+                    <div className="relative flex gap-1 overflow-x-auto pb-12 px-1 pt-2 snap-x snap-mandatory sm:gap-5 md:gap-6 lg:grid lg:grid-cols-2 lg:gap-7 lg:overflow-visible lg:px-0 lg:py-0 lg:snap-none">
                         {items.map((caseBlock) => {
                             const hasDetails = Boolean(caseBlock.solution || caseBlock.effect);
                             const id = String(caseBlock.id ?? `${caseBlock.title}-${caseBlock.direction}`);
@@ -105,7 +105,7 @@ const Cases = ({ items, title }: { items: CaseT[]; title: TitleT }) => {
                                             >
                                                 <h3 className="px-4 pt-4 text-2xl font-bold md:text-3xl">{caseBlock.title}</h3>
 
-                                                <div className="mx:0 md:mx-4 mb-4 flex-1 overflow-y-auto rounded-2xl bg-white/12 px-4 py-4 shadow-[0_18px_48px_rgba(12,24,64,0.35)] backdrop-blur">
+                                                <div className="mx:0 md:mx-4 mb-4 flex-1 overflow-y-auto scrollbar-none rounded-2xl bg-white/12 px-4 py-4 shadow-[0_18px_48px_rgba(12,24,64,0.35)] backdrop-blur">
                                                     {caseBlock.solution && (
                                                         <div className="mb-4">
                                                             <span className="block text-xs uppercase tracking-wide text-white/80">Решение</span>
